@@ -2,10 +2,17 @@ package com.hubspot.jinjava;
 
 import com.google.common.collect.Maps;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Main6CVtemplate {
+
+    private static Pattern pattern;
+    private static Matcher matcher;
 
     // Récupère le contenu de document.xml dans une String pour que jinja puisse remplacer les {{placeholder}}
     private static String readFile(String file) throws IOException {
@@ -22,7 +29,7 @@ public class Main6CVtemplate {
             return stringBuilder.toString();
         } finally {
             reader.close();
-            System.out.println("stringbuilder closed");
+            //System.out.println("stringbuilder closed");
         }
     }
 
@@ -35,11 +42,22 @@ public class Main6CVtemplate {
         System.out.println("Vérification du template...");
 
         String regexString = "{{(?:[^}]*?)>([^><]+)<(?:.*?)}}";
-        String escaped = escapeMetaCharacters(regexString);
-        String[] problemeFormattage = contenuDuXml.split(escaped);
+        String escapedRegexString = escapeMetaCharacters(regexString);
 
-        if (problemeFormattage.length != 0){
-            int count = 0;
+        pattern = Pattern.compile(escapedRegexString);
+        matcher = pattern.matcher(contenuDuXml);
+
+        int count = 0;
+        List<String> problemeFormattage = new ArrayList<>();
+
+        while(matcher.find()) {
+            ++count;
+            problemeFormattage.add(matcher.group(1));
+            //System.out.println(problemeFormattage.get(count-1));
+        }
+
+        if (problemeFormattage.size() > 0 ){
+            count = 0;
             System.out.println("Le remplissage du template est annulé car les champs à remplacer suivants ne sont pas formatés correctement:");
 
             for (String placeholder : problemeFormattage){
@@ -57,14 +75,15 @@ public class Main6CVtemplate {
     }
 
     private static String escapeMetaCharacters(String inputString){
-        final String[] metaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
+        //final String[] metaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
+        final String[] metaCharacters = {"\\","$","{","}","<",">","|","-","&","%"};
 
         for (int i = 0 ; i < metaCharacters.length ; i++){
             if(inputString.contains(metaCharacters[i])){
                 inputString = inputString.replace(metaCharacters[i],"\\"+metaCharacters[i]);
             }
         }
-        System.out.println("Escaped regex String: " + inputString);
+        //System.out.println("Escaped regex String: " + inputString);
         return inputString;
     }
 
