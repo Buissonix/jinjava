@@ -1,8 +1,12 @@
 package com.hubspot.jinjava;
 
 import com.google.common.collect.Maps;
+import com.hubspot.jinjava.util.ForLoop;
+import com.hubspot.jinjava.util.ObjectIterator;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -33,10 +37,12 @@ public class Main6CVtemplate {
         }
     }
 
-    // Vérifie la validité d'un template pour éviter que jinja ne génère une exception.
-    // Quand un docx est converti en xml, si le formatage d'un {{placeholder}} n'est pas consistent et homogène,
-    // des balises xml se rajoutent dans le champ ( exemple: {{<couleur>placeholder<italique>}} )
-    // et jinja génère donc une exception. La regexp se charge de trouver ces pb de formatage.
+    // Vérifie la validité d'un template pour éviter que jinjava ne génère une exception.
+    // Quand un docx est converti en xml, des fois le {{placeholder}} se retrouve injecté de
+    // balises qui empêchent jinjava de fonctionner, par exemple: {{<balise1>placeholder<balise2>}}
+    // Cela est dû au fait qu'il faut dans Word taper les {{placeholder}} d'une seule traite sans appuyer sur "retour arrière" du clavier (oui pour de vrai)
+    // La regexp se charge de trouver ces pb de formatage.
+    // TODO tester une fonction qui vire les balises à l'extérieur ex: {{<balise1>placeholder<balise2>}} -> <balise1>{{placeholder}}<balise2>
     private static boolean isXmlValide(String contenuDuXml){
         System.out.println("");
         System.out.println("Vérification du template...");
@@ -58,18 +64,19 @@ public class Main6CVtemplate {
 
         if (problemeFormattage.size() > 0 ){
             count = 0;
-            System.out.println("Le remplissage du template est annulé car les champs à remplacer suivants ne sont pas formatés correctement:");
+            System.out.println("Le remplissage du template est annulé car les champs suivants posent problème:");
 
             for (String placeholder : problemeFormattage){
                 ++count;
                 System.out.println(count + ". {{" + placeholder + "}}");
             }
 
-            System.out.println("Dans le template .docx, veuillez vérifier le formatage de chaque {{champ}} cité et l'appliquer de manière consistante et homogène." +
-                    " Dans le doute vous pouvez effacer le formatage et le refaire.");
+            System.out.println("Dans Word, veuillez retaper les {{champ}} de votre template cités au dessus d'une seule traite, " +
+                    "sans appuyer sur 'retour arrière'. Conseillé: ctrl+a et retaper le {{champ}} sans se tromper ni supprimer un caractère" +
+                    "durant sa réécriture.");
             return false;
         }
-        System.out.println("Le formatage de chaque {{champ}} du template est correct.");
+        System.out.println("Template accepté!");
         System.out.println("");
         return true;
     }
@@ -124,17 +131,23 @@ public class Main6CVtemplate {
         if (isXmlValide(template)) {
             System.out.println("Jinja processing...");
 
+            List<HashMap<String, String[]>> jobs = new ArrayList<>();
+
             Jinjava jinjava = new Jinjava();
             Map<String, Object> context = Maps.newHashMap();
             context.put("name", "Peter Jackson");
             context.put("job", "Développeur Java junior");
-            context.put("email", "peter.jackson@gmail.com");
+            context.put("mail", "peter.jackson@gmail.com");
             context.put("phone", "06 33 44 55 69");
             context.put("birthday", "03/10/1967");
             context.put("address", "3 rue de la Paix, Paris");
-            context.put("University", "Institut Français des Affaires");
+            context.put("university", "Institut Français des Affaires");
             context.put("major", "Formation devlog");
             context.put("date", "2019-2020");
+            context.put("nobackspace", "No Backspace");
+            context.put("backspacein", "Backspace in");
+            context.put("backspaceout", "Backspace out");
+            context.put("jobs",jobs);
 
             String renderedTemplate = jinjava.render(template, context);
 
