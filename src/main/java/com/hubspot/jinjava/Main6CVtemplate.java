@@ -37,19 +37,7 @@ public class Main6CVtemplate {
         }
     }
 
-    // Vérifie la validité d'un template pour éviter que jinjava ne génère une exception.
-    // Quand un docx est converti en xml, des fois le {{placeholder}} se retrouve injecté de
-    // balises qui empêchent jinjava de fonctionner, par exemple: {{<balise1>placeholder<balise2>}}
-    // Cela est dû au fait qu'il faut dans Word taper les {{placeholder}} d'une seule traite sans appuyer sur "retour arrière" du clavier (oui pour de vrai)
-    // La regexp se charge de trouver ces pb de formatage.
-    // TODO tester une fonction qui vire les balises à l'extérieur ex: {{<balise1>placeholder<balise2>}} -> <balise1>{{placeholder}}<balise2>
-    private static boolean isXmlValide(String contenuDuXml){
-        System.out.println("");
-        System.out.println("Vérification du template...");
-
-        String regexString = "{{(?:[^}]*?)>([^><]+)<(?:.*?)}}";
-        String escapedRegexString = escapeMetaCharacters(regexString);
-
+    private static boolean regexSearch(String escapedRegexString, String contenuDuXml) {
         pattern = Pattern.compile(escapedRegexString);
         matcher = pattern.matcher(contenuDuXml);
 
@@ -71,11 +59,38 @@ public class Main6CVtemplate {
                 System.out.println(count + ". {{" + placeholder + "}}");
             }
 
-            System.out.println("Dans Word, veuillez retaper les {{champ}} de votre template cités au dessus d'une seule traite, " +
-                    "sans appuyer sur 'retour arrière'. Conseillé: ctrl+a et retaper le {{champ}} sans se tromper ni supprimer un caractère" +
-                    "durant sa réécriture.");
+            System.out.println("");
             return false;
         }
+        return true;
+    }
+
+    // Vérifie la validité d'un template pour éviter que jinjava ne génère une exception.
+    // Quand le docx est converti en xml, des fois le {{placeholder}} se retrouve injecté de
+    // balises qui empêchent jinjava de fonctionner, par exemple: {{<balise1>placeholder<balise2>}}
+    // Cela est dû au fait qu'il faut dans Word taper les {{placeholder}} d'une seule traite sans appuyer sur "retour arrière" du clavier (oui pour de vrai)
+    // La regexp se charge de trouver ces pb de formatage.
+    // TODO tester une fonction qui vire les balises à l'extérieur ex: {{<balise1>placeholder<balise2>}} -> <balise1>{{placeholder}}<balise2>
+    // TODO inclure la vérification des boucles {% for ... %} {% endfor %} dans la regex
+    // TODO améliorer la regex pour qu'elle détecte les balises qui ne sont que d'un côté du nom dans le placeholder ex: {{<balise1>placeholder}} ou {{placeholder<balise1>}}
+    private static boolean isXmlValide(String contenuDuXml){
+        boolean bool = true;
+        String regexString;
+        String escapedRegexString;
+
+        System.out.println("");
+        System.out.println("Vérification du template...");
+
+        System.out.println("Checking {{placeholders}} simples :");
+        regexString = "{{(?:<[^}]*?>)*?([^><}]+)(?:<[^}]*?>)*?}}";
+        escapedRegexString = escapeMetaCharacters(regexString);
+        if (bool == true) bool = regexSearch(escapedRegexString, contenuDuXml);
+
+        System.out.println("Checking {% endfor %} :");
+        regexString = "{{(?:<[^}]*?>)*?([^><}]+)(?:<[^}]*?>)*?}}";
+        escapedRegexString = escapeMetaCharacters(regexString);
+        if (bool == true) bool = regexSearch(escapedRegexString, contenuDuXml);
+
         System.out.println("Template accepté!");
         System.out.println("");
         return true;
@@ -128,46 +143,48 @@ public class Main6CVtemplate {
 
         // 2. jinja
         String template = readFile("src/main/resources/template/word/document.xml");
-        if (isXmlValide(template)) {
-            System.out.println("Jinja processing...");
 
-            List<HashMap<String, String[]>> jobs = new ArrayList<>();
 
-            Jinjava jinjava = new Jinjava();
-            Map<String, Object> context = Maps.newHashMap();
-            context.put("name", "Peter Jackson");
-            context.put("job", "Développeur Java junior");
-            context.put("mail", "peter.jackson@gmail.com");
-            context.put("phone", "06 33 44 55 69");
-            context.put("birthday", "03/10/1967");
-            context.put("address", "3 rue de la Paix, Paris");
-            context.put("university", "Institut Français des Affaires");
-            context.put("major", "Formation devlog");
-            context.put("date", "2019-2020");
-            context.put("nobackspace", "No Backspace");
-            context.put("backspacein", "Backspace in");
-            context.put("backspaceout", "Backspace out");
-            context.put("jobs",jobs);
-
-            String renderedTemplate = jinjava.render(template, context);
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/bastien/IdeaProjects/jinjava/src/main/resources/template/word/document.xml"));
-            writer.write(renderedTemplate);
-            writer.close();
-
-            System.out.println("---");
+//        if (isXmlValide(template)) {
+//            System.out.println("Jinja processing...");
+//
+//            HashMap<String, List<String>> jobs = new HashMap<>();
+//            List<String> previousJobs = new ArrayList<>();
+//            previousJobs.add("Cuisinier"); previousJobs.add("Jardinier");
+//            jobs.put("name", previousJobs );
+//
+//            Jinjava jinjava = new Jinjava();
+//            Map<String, Object> context = Maps.newHashMap();
+//            context.put("name", "Julie Martin");
+//            context.put("job", "Développeur Java junior");
+//            context.put("mail", "julie.martin@gmail.com");
+//            context.put("phone", "06 33 44 55 69");
+//            context.put("birthday", "03/10/1967");
+//            context.put("address", "3 rue de la Paix, Paris");
+//            context.put("university", "Institut Français des Affaires");
+//            context.put("major", "Formation devlog");
+//            context.put("date", "2019-2020");
+//            context.put("jobs",jobs);
+//
+//            String renderedTemplate = jinjava.render(template, context);
+//
+//            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/bastien/IdeaProjects/jinjava/src/main/resources/template/word/document.xml"));
+//            writer.write(renderedTemplate);
+//            writer.close();
+//
+//            System.out.println("---");
 
             // 3. zip
-            System.out.println("Zipping...");
-            Process zipProcess = Runtime.getRuntime().exec("src/main/resources/zip.sh");
-            zipProcess.waitFor();
+//            System.out.println("Zipping...");
+//            Process zipProcess = Runtime.getRuntime().exec("src/main/resources/zip.sh");
+//            zipProcess.waitFor();
 
             // 4. .zip -> .docx
-            System.out.println("changing extension to .docx...");
-            File f3 = new File("src/main/resources/template.zip");
-            Boolean bool2 = f3.renameTo(new File("src/main/resources/template.docx"));
-            System.out.println("Renamed to .docx ? " + bool2);
-            System.out.println("---");
+//            System.out.println("changing extension to .docx...");
+//            File f3 = new File("src/main/resources/template.zip");
+//            Boolean bool2 = f3.renameTo(new File("src/main/resources/template.docx"));
+//            System.out.println("Renamed to .docx ? " + bool2);
+//            System.out.println("---");
         }
 
 
