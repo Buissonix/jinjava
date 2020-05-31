@@ -1,19 +1,13 @@
 package com.hubspot.jinjava;
 
-import com.google.common.collect.Maps;
-import com.hubspot.jinjava.util.ForLoop;
-import com.hubspot.jinjava.util.ObjectIterator;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Main6CVtemplate {
+public class Main {
 
     private static Pattern pattern;
     private static Matcher matcher;
@@ -37,7 +31,7 @@ public class Main6CVtemplate {
         }
     }
 
-    private static boolean regexSearch(String escapedRegexString, String contenuDuXml) {
+    private static boolean isPatternFound(String escapedRegexString, String contenuDuXml) {
         pattern = Pattern.compile(escapedRegexString);
         matcher = pattern.matcher(contenuDuXml);
 
@@ -60,9 +54,9 @@ public class Main6CVtemplate {
             }
 
             System.out.println("");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     // Vérifie la validité d'un template pour éviter que jinjava ne génère une exception.
@@ -71,10 +65,8 @@ public class Main6CVtemplate {
     // Cela est dû au fait qu'il faut dans Word taper les {{placeholder}} d'une seule traite sans appuyer sur "retour arrière" du clavier (oui pour de vrai)
     // La regexp se charge de trouver ces pb de formatage.
     // TODO tester une fonction qui vire les balises à l'extérieur ex: {{<balise1>placeholder<balise2>}} -> <balise1>{{placeholder}}<balise2>
-    // TODO inclure la vérification des boucles {% for ... %} {% endfor %} dans la regex
-    // TODO améliorer la regex pour qu'elle détecte les balises qui ne sont que d'un côté du nom dans le placeholder ex: {{<balise1>placeholder}} ou {{placeholder<balise1>}}
     private static boolean isXmlValide(String contenuDuXml){
-        boolean bool = true;
+        boolean valide = true;
         String regexString;
         String escapedRegexString;
 
@@ -82,22 +74,21 @@ public class Main6CVtemplate {
         System.out.println("Vérification du template...");
 
         System.out.println("Checking {{placeholders}} simples :");
-        regexString = "{{(?:<[^}]*?>)*?([^><}]+)(?:<[^}]*?>)*?}}";
+        regexString = "({{(?:[^><}]*?)(?:<[^}]*?)}}).*?";
         escapedRegexString = escapeMetaCharacters(regexString);
-        if (bool == true) bool = regexSearch(escapedRegexString, contenuDuXml);
+        if ( isPatternFound(escapedRegexString, contenuDuXml) == true) valide = false;
 
         System.out.println("Checking {% endfor %} :");
-        regexString = "{{(?:<[^}]*?>)*?([^><}]+)(?:<[^}]*?>)*?}}";
+        regexString = "{%(?:.)*?endfor(?:.)*?%}";
         escapedRegexString = escapeMetaCharacters(regexString);
-        if (bool == true) bool = regexSearch(escapedRegexString, contenuDuXml);
+        if ( isPatternFound(escapedRegexString, contenuDuXml) == true) valide = false;
 
-        System.out.println("Template accepté!");
-        System.out.println("");
-        return true;
+        System.out.println(valide == true?"Template accepté !":"Template refusé !");
+        return valide;
     }
 
     private static String escapeMetaCharacters(String inputString){
-        //final String[] metaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
+        //final String[] allMetaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
         final String[] metaCharacters = {"\\","$","{","}","<",">","|","-","&","%"};
 
         for (int i = 0 ; i < metaCharacters.length ; i++){
@@ -143,6 +134,7 @@ public class Main6CVtemplate {
 
         // 2. jinja
         String template = readFile("src/main/resources/template/word/document.xml");
+        isXmlValide(template);
 
 
 //        if (isXmlValide(template)) {
@@ -174,18 +166,18 @@ public class Main6CVtemplate {
 //
 //            System.out.println("---");
 
-            // 3. zip
+        // 3. zip
 //            System.out.println("Zipping...");
 //            Process zipProcess = Runtime.getRuntime().exec("src/main/resources/zip.sh");
 //            zipProcess.waitFor();
 
-            // 4. .zip -> .docx
+        // 4. .zip -> .docx
 //            System.out.println("changing extension to .docx...");
 //            File f3 = new File("src/main/resources/template.zip");
 //            Boolean bool2 = f3.renameTo(new File("src/main/resources/template.docx"));
 //            System.out.println("Renamed to .docx ? " + bool2);
 //            System.out.println("---");
-        }
+//            }
 
 
     }
