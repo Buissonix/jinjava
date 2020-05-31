@@ -28,6 +28,34 @@ public class Main {
         }
     }
 
+    // Injecte le nom du template dans les scripts bash
+    private static void creerBashScripts() throws IOException {
+        File unzip = new File("src/main/resources/unzip.sh");
+        String unzipScript =
+                "cd src/main/resources\n" +
+                        "mkdir XXX\n" +
+                        "mv XXX.zip ./XXX\n" +
+                        "cd XXX\n" +
+                        "unzip -n XXX.zip\n" +
+                        "rm XXX.zip\n";
+
+        File zip = new File("src/main/resources/zip.sh");
+        String zipScript =
+                "cd src/main/resources/XXX\n" +
+                        "zip -r XXX.zip ./*\n" +
+                        "mv XXX.zip ../\n" +
+                        "rm -rf XXX";
+
+        unzipScript = unzipScript.replaceAll("XXX", TEMPLATE_NAME);
+        zipScript = zipScript.replaceAll("XXX", TEMPLATE_NAME);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(unzip.getPath()));
+        writer.write(unzipScript);
+        writer = new BufferedWriter(new FileWriter(zip.getPath()));
+        writer.write(zipScript);
+        writer.close();
+    }
+
     // Dézippe le template en affichant l'output de l'OS dans le terminal
     private static boolean unzip() throws IOException, InterruptedException {
         boolean bool = true;
@@ -119,8 +147,20 @@ public class Main {
             return;
         }
 
+        try {
+            creerBashScripts();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+        }
+
         // Dézipper l'archive pour pouvoir éditer le XML et remplacer les valeurs
-        unzip();
+        try {
+            unzip();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+        }
 
         // Enlever les balises XML indésirables qui se rajoutent dans les champs à remplacer
         String contenuDuXml = readFile(XML_PATH);
