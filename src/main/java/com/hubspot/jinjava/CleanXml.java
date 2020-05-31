@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class RegexTest {
+public class CleanXml {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -132,7 +132,7 @@ public class RegexTest {
 
     // Enlève le XML indésirable qui se rajoute tout seul pour éviter que jinjava ne génère une exception.
     // TODO si supprimer les balises corrompt le template, tester une fonction qui vire les balises à l'extérieur ex: {{<balise1>placeholder<balise2>}} -> <balise1>{{placeholder}}<balise2>
-    private static void corrigerXML(String contenuDuXml){
+    static void corrigerXML(String contenuDuXml){
         String regexChampSimple = "({{(?:[^><}]*?)(?:<[^}]*?)}}).*?";
         String regexChampLoop = "{%(?:.)*?endfor(?:.)*?%}";
 
