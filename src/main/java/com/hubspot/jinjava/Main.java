@@ -28,29 +28,41 @@ public class Main {
         }
     }
 
+    private static boolean renommerEnZip(File templateDocx){
+        Boolean bool = templateDocx.renameTo(new File("src/main/resources/" + TEMPLATE_NAME + ".zip"));
+        return bool;
+    }
+
+    private static boolean renommerEnDocx(File templateZip){
+        Boolean bool = templateZip.renameTo(new File(TEMPLATE_PATH));
+        return bool;
+    }
+
     // Injecte le nom du template dans les scripts bash
     private static void creerBashScripts() throws IOException {
         File unzip = new File("src/main/resources/unzip.sh");
         String unzipScript =
                 "cd src/main/resources\n" +
-                        "mkdir XXX\n" +
-                        "mv XXX.zip ./XXX\n" +
-                        "cd XXX\n" +
-                        "unzip -n XXX.zip\n" +
-                        "rm XXX.zip\n";
+                "mkdir XXX\n" +
+                "mv XXX.zip ./XXX\n" +
+                "cd XXX\n" +
+                "unzip -n XXX.zip\n" +
+                "rm XXX.zip\n";
 
         File zip = new File("src/main/resources/zip.sh");
         String zipScript =
                 "cd src/main/resources/XXX\n" +
-                        "zip -r XXX.zip ./*\n" +
-                        "mv XXX.zip ../\n" +
-                        "rm -rf XXX";
+                "zip -r XXX.zip ./*\n" +
+                "mv XXX.zip ../\n" +
+                "rm -rf XXX";
 
         unzipScript = unzipScript.replaceAll("XXX", TEMPLATE_NAME);
         zipScript = zipScript.replaceAll("XXX", TEMPLATE_NAME);
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(unzip.getPath()));
         writer.write(unzipScript);
+        writer.close();
+
         writer = new BufferedWriter(new FileWriter(zip.getPath()));
         writer.write(zipScript);
         writer.close();
@@ -114,16 +126,6 @@ public class Main {
         }
     }
 
-    private static boolean renommerEnZip(File templateDocx){
-        Boolean bool = templateDocx.renameTo(new File("src/main/resources/" + TEMPLATE_NAME + ".zip"));
-        return bool;
-    }
-
-    private static boolean renommerEnDocx(File templateZip){
-        Boolean bool = templateZip.renameTo(new File(TEMPLATE_PATH));
-        return bool;
-    }
-
     public static void main(String[] args) throws IOException, InterruptedException {
 
         File templateDocx = new File(TEMPLATE_PATH);
@@ -147,6 +149,7 @@ public class Main {
             return;
         }
 
+        // injecter le nom du template dans les scripts bash
         try {
             creerBashScripts();
         } catch (Exception e) {
@@ -154,12 +157,14 @@ public class Main {
             System.out.println(e.getStackTrace());
         }
 
-        // Dézipper l'archive pour pouvoir éditer le XML et remplacer les valeurs
-        try {
-            unzip();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+        // dézipper l'archive pour pouvoir éditer le XML et remplacer les valeurs
+        if(templateZip.exists()){
+            try {
+                unzip();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.getStackTrace());
+            }
         }
 
         // Enlever les balises XML indésirables qui se rajoutent dans les champs à remplacer

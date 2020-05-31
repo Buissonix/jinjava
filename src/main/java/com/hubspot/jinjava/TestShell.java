@@ -8,12 +8,13 @@ import java.io.IOException;
 public class TestShell {
 
     public static void main(String[] args) throws IOException {
-        File f1 = new File("src/main/resources/test.sh");
+        File f1 = new File("src/main/resources/testUnzip.sh");
+        File f2 = new File("src/main/resources/testZip.sh");
 
         String interpolationA = "AAA";
         String interpolationB = "BBB";
 
-        String script =
+        String unzipScript =
                 "#cd src/main/resources\n" +
                 "#mkdir template\n" +
                 "#mv template.zip ./template\n" +
@@ -21,11 +22,21 @@ public class TestShell {
                 "#unzip -n template.zip\n" +
                 "#rm template.zip";
 
-        script = script.replaceAll("template", interpolationA);
-        script = script.replaceAll("zip", interpolationB);
+        String zipScript =
+                "#cd src/main/resources/template\n" +
+                "#zip -r template.zip ./*\n" +
+                "#mv template.zip ../\n" +
+                "#rm -rf template";
+
+        unzipScript = unzipScript.replaceAll("template", interpolationA);
+        zipScript = zipScript.replaceAll("template", interpolationB);
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(f1.getPath()));
-        writer.write(script);
+        writer.write(unzipScript);
+        writer.close();
+
+        writer = new BufferedWriter(new FileWriter(f2.getPath()));
+        writer.write(zipScript);
         writer.close();
 
     }
