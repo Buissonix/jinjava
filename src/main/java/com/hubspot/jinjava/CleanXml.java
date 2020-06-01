@@ -10,13 +10,20 @@ public class CleanXml {
 
     // le main ne sert qu'à des fins de test
     public static void main(String[] args) throws IOException, InterruptedException {
-
+//
 //        contenuDuXml = readFile("src/main/resources/template/word/document.xml");
-//        corrigerXML(contenuDuXml);
+//
+//        // output le contenu du XML initial dans input.txt
+//        File input = new File("src/main/resources/input.txt");
+//        BufferedWriter writer = new BufferedWriter(new FileWriter(input.getPath()));
+//        writer.write(contenuDuXml);
+//        writer.close();
+//
+//        corrigerXML();
 //
 //        // output le contenu du XML corrigé dans output.txt
 //        File output = new File("src/main/resources/output.txt");
-//        BufferedWriter writer = new BufferedWriter(new FileWriter(output.getPath()));
+//        writer = new BufferedWriter(new FileWriter(output.getPath()));
 //        writer.write(contenuDuXml);
 //        writer.close();
     }
@@ -32,7 +39,6 @@ public class CleanXml {
     public static void setContenuDuXml(String contenuDuXml) {
         CleanXml.contenuDuXml = contenuDuXml;
     }
-
 
     // Récupère le contenu de document.xml dans une String
     private static String readFile(String file) throws IOException {
@@ -87,7 +93,7 @@ public class CleanXml {
             for (String placeholder : listeProblemes){
                 ++count;
                 System.out.println("---");
-                System.out.println("prob " + count + ". {{" + placeholder + "}}");
+                System.out.println("prob " + count + ". " + placeholder);
                 System.out.println("---");
             }
 
@@ -120,19 +126,33 @@ public class CleanXml {
         return listeClean;
     }
 
-    // TODO: Supprime ou rajoute les espaces nécessaires dans les champs
-    private static List<String> cleanEspaces(List<String> listeProbleme){
-        return listeProbleme;
+    // Ajoute un espace entre les délimiteurs {% / %} et leur contenu
+    private static List<String> cleanEspaces(List<String> listeProbleme, int leftOrRight) {
+        List<String> listeClean = new ArrayList<>(listeProbleme);
+
+        if (!(listeClean.isEmpty())) {
+            String remplacement;
+            if (leftOrRight == 0) {
+                for (int i = 0; i < listeClean.size(); i++) {
+                    remplacement = listeClean.get(i).substring(0, 2) + " " + listeClean.get(i).substring(2);
+                    listeClean.set(i, remplacement);
+                }
+            } else {
+                for (int i = 0; i < listeClean.size(); i++) {
+                    remplacement = listeClean.get(i).substring(0, 1) + " " + listeClean.get(i).substring(1, 3);
+                    listeClean.set(i, remplacement);
+                }
+            }
+        }
+        return listeClean;
     }
 
     // Remplace les mauvais champs du XML par les champs propres
-    private static void reinjecterChampsPropres(List<String> listeChampsARemplacer){
+    private static void reinjecterChampsPropres(List<String> listeChampsARemplacer, List<String> listeClean){
 
         if (!(listeChampsARemplacer.isEmpty())){
-            List<String> listeClean = cleanEspaces(cleanBalises(listeChampsARemplacer));
-
             for (int i = 0; i < listeChampsARemplacer.size(); i++){
-                contenuDuXml = contenuDuXml.replaceAll(escapeMetaCharacters(listeChampsARemplacer.get(i)), listeClean.get(i));
+                setContenuDuXml(contenuDuXml.replaceAll(escapeMetaCharacters(listeChampsARemplacer.get(i)), listeClean.get(i)));
                 System.out.println("----");
                 System.out.println("La string :");
                 System.out.println(listeChampsARemplacer.get(i));
@@ -144,21 +164,54 @@ public class CleanXml {
     }
 
     // Enlève le XML indésirable qui se rajoute tout seul pour éviter que jinjava ne génère une exception.
-    static void corrigerXML(String contenuDuXml){
-        String regexChampSimple = "({{(?:[^><}]*?)(?:<[^}]*?)}}).*?";
-        String regexForLoop;
-        String regexEndLoop = "({%(?:.)*?endfor(?:.)*?%}).*?";
-
+    static void corrigerXML(){
         System.out.println("");
         System.out.println("Vérification du template...");
 
-        List<String> listeChampSimple = retournerListeMatchs(escapeMetaCharacters(regexChampSimple), contenuDuXml);
-        listeChampSimple = enleverDoublonListe(listeChampSimple);
-        reinjecterChampsPropres(listeChampSimple);
+        List<String> listeChampsARemplacer = new ArrayList<>();
+        List<String> listeChampsPropres = new ArrayList<>();
+        List<String> listeRegex = new ArrayList<>();
 
-//        List<String> listeEndLoop = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
-//        listeEndLoop = enleverDoublonListe(listeEndLoop);
-//        reinjecterChampsPropres();
+        // Pour supprimer les balises xml
+        String regexChampSimple = "({{(?:[^><}]*?)(?:<[^}]*?)}}).*?";
+        String regexForLoop = "({%(?:[^><}]*?)(?:<[^}]*?)%}).*?";
+
+        listeRegex.add(regexChampSimple); listeRegex.add(regexForLoop);
+
+        for (String regex: listeRegex){
+            listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regex), contenuDuXml);
+            listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+            listeChampsPropres = cleanBalises(listeChampsARemplacer);
+            reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+        }
+        listeChampsARemplacer.clear(); listeChampsPropres.clear(); listeRegex.clear();
+
+        // Pour corriger tous les mauvais {% endfor %} à la volée
+        String regexEndLoop = "({%(?:.)*?endfor(?:.)*?%}).*?";
+
+        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
+        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+        for (String match : listeChampsARemplacer) {
+            listeChampsPropres.add("{% endfor %}");
+        }
+        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+
+        // Pour ajouter des espaces à {%for X in Y%}
+        String regexForLoopLeftSpace = "({%(?:[^ ])).*?";
+
+        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexForLoopLeftSpace), contenuDuXml);
+        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+        listeChampsPropres = cleanEspaces(listeChampsARemplacer, 0);
+        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+        listeChampsARemplacer.clear(); listeChampsPropres.clear();
+
+        String regexForLoopRightSpace = "((?:[^ ])%}).*?";
+
+        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexForLoopRightSpace), contenuDuXml);
+        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+        listeChampsPropres = cleanEspaces(listeChampsARemplacer, 1);
+        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+        listeChampsARemplacer.clear(); listeChampsPropres.clear();
 
         System.out.println("Template vérifié ou corrigé.");
 

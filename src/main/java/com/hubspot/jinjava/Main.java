@@ -68,7 +68,7 @@ public class Main {
         writer.close();
     }
 
-    // Dézippe le template en affichant l'output de l'OS dans le terminal
+    // Dézippe le template en affichant l'output de l'OS dans la console
     private static boolean unzip() throws IOException, InterruptedException {
         boolean bool = true;
 
@@ -97,7 +97,7 @@ public class Main {
         }
     }
 
-    // Zippe le CV rempli en affichant l'output de l'OS dans le terminal
+    // Zippe le CV rempli en affichant l'output de l'OS dans la console
     private static boolean zip() throws IOException, InterruptedException {
         boolean bool = true;
 
@@ -167,8 +167,16 @@ public class Main {
         // Enlever les balises XML indésirables qui se rajoutent dans les champs à remplacer
         String contenuDuXml = readFile(XML_PATH);
         CleanXml.setContenuDuXml(contenuDuXml);
-        CleanXml.corrigerXML(contenuDuXml);
+        CleanXml.corrigerXML();
         String cleanXml = CleanXml.getContenuDuXml();
+
+
+        // Ecrire le XML corrigé dans document.xml
+        File output = new File(XML_PATH);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(output.getPath()));
+        writer.write(contenuDuXml);
+        writer.close();
+
 
         // Remplacer les champs par les valeurs souhaitées
 //        System.out.println("Jinja processing...");
