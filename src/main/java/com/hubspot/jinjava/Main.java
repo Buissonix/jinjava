@@ -134,19 +134,16 @@ public class Main {
         // trouver le template format .docx
         if(!(templateDocx.exists())){
             System.out.println("Le template " + templateDocx.getPath() + " est introuvable");
-            return;
         }
 
         // convertir de .docx à .zip
         if (!(renommerEnZip(templateDocx))){
             System.out.println("Le template n'a pas pu être converti en archive .zip");
-            return;
         }
 
         // trouver le template format .zip
         if(!(templateZip.exists())){
             System.out.println("Le template " + templateZip.getPath() + " est introuvable");
-            return;
         }
 
         // injecter le nom du template dans les scripts bash
@@ -169,7 +166,9 @@ public class Main {
 
         // Enlever les balises XML indésirables qui se rajoutent dans les champs à remplacer
         String contenuDuXml = readFile(XML_PATH);
+        CleanXml.setContenuDuXml(contenuDuXml);
         CleanXml.corrigerXML(contenuDuXml);
+        String cleanXml = CleanXml.getContenuDuXml();
 
         // Remplacer les champs par les valeurs souhaitées
 //        System.out.println("Jinja processing...");
@@ -202,14 +201,22 @@ public class Main {
 
 
         // Zipper le tout pour recréer un CV rempli en .docx
-        zip();
+        File dossier = new File("src/main/resources/" + TEMPLATE_NAME);
+        if(dossier.exists()){
+            try {
+                zip();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.getStackTrace());
+            }
+        } else {
+            System.out.println("Pas de dossier " + dossier.getPath() + " trouvé, le processus de zippage a donc été annulé.");
+        }
 
         // convertir de .zip à .docx
         if (!(renommerEnDocx(templateZip))){
             System.out.println("Le CV au format .zip n'a pas pu être converti en fichier .docx");
             return;
         }
-
-
     }
 }

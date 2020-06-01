@@ -8,16 +8,30 @@ import java.util.regex.Pattern;
 
 public class CleanXml {
 
+    // le main ne sert qu'à des fins de test
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        contenuDuXml = readFile("src/main/resources/template/word/document.xml");
-        corrigerXML(contenuDuXml);
-
+//        contenuDuXml = readFile("src/main/resources/template/word/document.xml");
+//        corrigerXML(contenuDuXml);
+//
+//        // output le contenu du XML corrigé dans output.txt
+//        File output = new File("src/main/resources/output.txt");
+//        BufferedWriter writer = new BufferedWriter(new FileWriter(output.getPath()));
+//        writer.write(contenuDuXml);
+//        writer.close();
     }
 
     private static String contenuDuXml;
     private static Pattern pattern;
     private static Matcher matcher;
+
+    public static String getContenuDuXml() {
+        return contenuDuXml;
+    }
+
+    public static void setContenuDuXml(String contenuDuXml) {
+        CleanXml.contenuDuXml = contenuDuXml;
+    }
 
 
     // Récupère le contenu de document.xml dans une String
@@ -106,7 +120,7 @@ public class CleanXml {
         return listeClean;
     }
 
-    // TODO Supprime ou rajoute les espaces nécessaires dans les champs
+    // TODO: Supprime ou rajoute les espaces nécessaires dans les champs
     private static List<String> cleanEspaces(List<String> listeProbleme){
         return listeProbleme;
     }
@@ -125,17 +139,15 @@ public class CleanXml {
                 System.out.println("a été remplacée par :");
                 System.out.println(listeClean.get(i));
                 System.out.println("------");
-                // TODO output le contenu dans un txt
             }
         }
     }
 
     // Enlève le XML indésirable qui se rajoute tout seul pour éviter que jinjava ne génère une exception.
-    // TODO si supprimer les balises corrompt le template, tester une fonction qui vire les balises à l'extérieur ex: {{<balise1>placeholder<balise2>}} -> <balise1>{{placeholder}}<balise2>
     static void corrigerXML(String contenuDuXml){
         String regexChampSimple = "({{(?:[^><}]*?)(?:<[^}]*?)}}).*?";
-        String regexChampLoop = "{%(?:.)*?endfor(?:.)*?%}";
-
+        String regexForLoop;
+        String regexEndLoop = "({%(?:.)*?endfor(?:.)*?%}).*?";
 
         System.out.println("");
         System.out.println("Vérification du template...");
@@ -144,14 +156,11 @@ public class CleanXml {
         listeChampSimple = enleverDoublonListe(listeChampSimple);
         reinjecterChampsPropres(listeChampSimple);
 
-        //List<String> listeChampLoop = retournerListeMatchs(escapeMetaCharacters(regexChampLoop), contenuDuXml);
-        //listeChampLoop = enleverDoublonListe(listeChampLoop);
-        //reinjecterChampsPropres();
+//        List<String> listeEndLoop = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
+//        listeEndLoop = enleverDoublonListe(listeEndLoop);
+//        reinjecterChampsPropres();
 
         System.out.println("Template vérifié ou corrigé.");
 
     }
-
-
-
 }
