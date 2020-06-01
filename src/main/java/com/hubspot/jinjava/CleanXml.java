@@ -29,8 +29,6 @@ public class CleanXml {
     }
 
     private static String contenuDuXml;
-    private static Pattern pattern;
-    private static Matcher matcher;
 
     public static String getContenuDuXml() {
         return contenuDuXml;
@@ -75,8 +73,8 @@ public class CleanXml {
 
     // Renvoie une liste de tous les matchs de la regex
     private static List<String> retournerListeMatchs(String escapedRegexString, String contenuDuXml) {
-        pattern = Pattern.compile(escapedRegexString);
-        matcher = pattern.matcher(contenuDuXml);
+        Pattern pattern = Pattern.compile(escapedRegexString);
+        Matcher matcher = pattern.matcher(contenuDuXml);
 
         int count = 0;
         List<String> listeProblemes = new ArrayList<>();
@@ -87,18 +85,18 @@ public class CleanXml {
             //System.out.println(listeProblemes.get(count-1));
         }
 
-        if (listeProblemes.size() > 0 ){
-            count = 0;
-
-            for (String placeholder : listeProblemes){
-                ++count;
-                System.out.println("---");
-                System.out.println("prob " + count + ". " + placeholder);
-                System.out.println("---");
-            }
-
-            System.out.println("");
-        }
+//        if (listeProblemes.size() > 0 ){
+//            count = 0;
+//
+//            for (String placeholder : listeProblemes){
+//                ++count;
+//                System.out.println("---");
+//                System.out.println("prob " + count + ". " + placeholder);
+//                System.out.println("---");
+//            }
+//
+//            System.out.println("");
+//        }
         return listeProblemes;
     }
 

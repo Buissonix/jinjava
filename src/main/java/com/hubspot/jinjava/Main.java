@@ -174,7 +174,7 @@ public class Main {
         // Ecrire le XML corrigé dans document.xml
         File output = new File(XML_PATH);
         BufferedWriter writer = new BufferedWriter(new FileWriter(output.getPath()));
-        writer.write(contenuDuXml);
+        writer.write(CleanXml.getContenuDuXml());
         writer.close();
 
 
