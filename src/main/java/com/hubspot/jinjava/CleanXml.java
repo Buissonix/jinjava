@@ -163,7 +163,7 @@ public class CleanXml {
 
     // Enlève le XML indésirable qui se rajoute tout seul pour éviter que jinjava ne génère une exception.
     static void corrigerXML(){
-        System.out.println("");
+        System.out.println();
         System.out.println("Vérification du template...");
 
         List<String> listeChampsARemplacer = new ArrayList<>();
