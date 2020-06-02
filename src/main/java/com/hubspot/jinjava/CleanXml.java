@@ -126,6 +126,8 @@ public class CleanXml {
 
     // Ajoute un espace entre les délimiteurs {% / %} et leur contenu
     private static List<String> cleanEspaces(List<String> listeProbleme, int leftOrRight) {
+        // UPDATE: les espaces n'empêchent pas le bon fonctionnement, cela ne change rien au final
+        // Aucune différence de fonctionnement entre {% for A in B %} et {%for a in B   %}
         List<String> listeClean = new ArrayList<>(listeProbleme);
 
         if (!(listeClean.isEmpty())) {
@@ -189,27 +191,12 @@ public class CleanXml {
 
         listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
         listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+        int indexNormal = listeChampsARemplacer.indexOf("{% endfor %}");
+        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
         for (String match : listeChampsARemplacer) {
             listeChampsPropres.add("{% endfor %}");
         }
         reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
-
-        // Pour ajouter des espaces à {%for X in Y%}
-        String regexForLoopLeftSpace = "({%(?:[^ ])).*?";
-
-        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexForLoopLeftSpace), contenuDuXml);
-        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
-        listeChampsPropres = cleanEspaces(listeChampsARemplacer, 0);
-        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
-        listeChampsARemplacer.clear(); listeChampsPropres.clear();
-
-        String regexForLoopRightSpace = "((?:[^ ])%}).*?";
-
-        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexForLoopRightSpace), contenuDuXml);
-        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
-        listeChampsPropres = cleanEspaces(listeChampsARemplacer, 1);
-        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
-        listeChampsARemplacer.clear(); listeChampsPropres.clear();
 
         System.out.println("Template vérifié ou corrigé.");
 

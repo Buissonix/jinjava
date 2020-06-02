@@ -227,7 +227,6 @@ public class Main {
         // convertir de .zip à .docx
         if (!(renommerEnDocx(templateZip))){
             System.out.println("Le CV au format .zip n'a pas pu être converti en fichier .docx");
-            return;
         }
     }
 }
