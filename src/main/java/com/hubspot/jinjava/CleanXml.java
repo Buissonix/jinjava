@@ -185,7 +185,7 @@ public class CleanXml {
         listeChampsARemplacer.clear(); listeChampsPropres.clear(); listeRegex.clear();
 
         // Pour corriger tous les mauvais {% endfor %} à la volée
-        String regexEndLoop = "({%(?:.)*?endfor(?:.)*?%}).*?";
+        String regexEndLoop = "({%(?:[^%])*?endfor(?:[^%])*?%}).*?";
 
         listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
         listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);

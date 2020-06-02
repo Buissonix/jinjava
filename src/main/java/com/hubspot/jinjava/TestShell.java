@@ -5,14 +5,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
+// classe pour tester le remplacement d'un nom de fichier/répertoire dans un script bash
 public class TestShell {
 
     public static void main(String[] args) throws IOException {
         File f1 = new File("src/main/resources/testUnzip.sh");
         File f2 = new File("src/main/resources/testZip.sh");
 
-        String interpolationA = "AAA";
-        String interpolationB = "BBB";
+        String nom1 = "AAA";
+        String nom2 = "BBB";
 
         String unzipScript =
                 "#cd src/main/resources\n" +
@@ -28,8 +30,8 @@ public class TestShell {
                 "#mv template.zip ../\n" +
                 "#rm -rf template";
 
-        unzipScript = unzipScript.replaceAll("template", interpolationA);
-        zipScript = zipScript.replaceAll("template", interpolationB);
+        unzipScript = unzipScript.replaceAll("template", nom1);
+        zipScript = zipScript.replaceAll("template", nom2);
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(f1.getPath()));
         writer.write(unzipScript);

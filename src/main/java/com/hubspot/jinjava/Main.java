@@ -1,6 +1,14 @@
 package com.hubspot.jinjava;
 
+import com.google.common.collect.Maps;
+import com.hubspot.jinjava.util.ForLoop;
+import com.hubspot.jinjava.util.ObjectIterator;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -170,43 +178,38 @@ public class Main {
         CleanXml.corrigerXML();
         String cleanXml = CleanXml.getContenuDuXml();
 
+        // Remplacer les champs par les valeurs souhaitées
+        System.out.println("Jinja processing...");
 
-        // Ecrire le XML corrigé dans document.xml
+        List<HashMap<String,String>> listeCours = new ArrayList<>();
+
+        HashMap<String, String> coursFrancais = new HashMap<>();
+        coursFrancais.put("nom", "Français");
+        coursFrancais.put("note", "18");
+        listeCours.add(coursFrancais);
+
+        HashMap<String, String> coursMaths = new HashMap<>();
+        coursMaths.put("nom", "Maths");
+        coursMaths.put("note", "15");
+        listeCours.add(coursMaths);
+
+        ForLoop cours = ObjectIterator.getLoop(listeCours);
+
+        Jinjava jinjava = new Jinjava();
+        Map<String, Object> context = Maps.newHashMap();
+        context.put("nomEleve", "Jordan");
+        context.put("dateNaissance", "03/03/1995");
+        context.put("cours", cours);
+
+        String renderedTemplate = jinjava.render(cleanXml, context);
+
+        // Ecrire le nouveau contenu dans document.xml
         File output = new File(XML_PATH);
         BufferedWriter writer = new BufferedWriter(new FileWriter(output.getPath()));
-        writer.write(CleanXml.getContenuDuXml());
+        writer.write(renderedTemplate);
         writer.close();
 
-
-        // Remplacer les champs par les valeurs souhaitées
-//        System.out.println("Jinja processing...");
-//
-//        HashMap<String, List<String>> jobs = new HashMap<>();
-//        List<String> previousJobs = new ArrayList<>();
-//        previousJobs.add("Cuisinier"); previousJobs.add("Jardinier");
-//        jobs.put("name", previousJobs );
-//
-//        Jinjava jinjava = new Jinjava();
-//        Map<String, Object> context = Maps.newHashMap();
-//        context.put("name", "Julie Martin");
-//        context.put("job", "Développeur Java junior");
-//        context.put("mail", "julie.martin@gmail.com");
-//        context.put("phone", "06 33 44 55 69");
-//        context.put("birthday", "03/10/1967");
-//        context.put("address", "3 rue de la Paix, Paris");
-//        context.put("university", "Institut Français des Affaires");
-//        context.put("major", "Formation devlog");
-//        context.put("date", "2019-2020");
-//        context.put("jobs",jobs);
-//
-//        String renderedTemplate = jinjava.render(template, context);
-//
-//        BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/bastien/IdeaProjects/jinjava/src/main/resources/template/word/document.xml"));
-//        writer.write(renderedTemplate);
-//        writer.close();
-//
-//        System.out.println("---");
-
+        System.out.println("---");
 
         // Zipper le tout pour recréer un CV rempli en .docx
         File dossier = new File("src/main/resources/" + TEMPLATE_NAME);
