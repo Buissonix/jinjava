@@ -1,0 +1,10 @@
+{{nomEmploye}}
+
+{{dateNaissance}}
+
+{% for experience in experiencesPro %}
+{{experience.nom}}
+{{experience.entreprise}}
+{{experience.date}}
+------------------
+{% endfor %}

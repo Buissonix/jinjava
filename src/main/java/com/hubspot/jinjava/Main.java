@@ -181,25 +181,27 @@ public class Main {
         // Remplacer les champs par les valeurs souhaitées
         System.out.println("Jinja processing...");
 
-        List<HashMap<String,String>> listeCours = new ArrayList<>();
+        List<HashMap<String,String>> experiencesPro = new ArrayList<>();
 
-        HashMap<String, String> coursFrancais = new HashMap<>();
-        coursFrancais.put("nom", "Français");
-        coursFrancais.put("note", "18");
-        listeCours.add(coursFrancais);
+        HashMap<String, String> exp1 = new HashMap<>();
+        exp1.put("nom", "Développeur back-end JAVA");
+        exp1.put("entreprise", "Crédit Agricole");
+        exp1.put("date", "06/2019 à 06/2020");
+        experiencesPro.add(exp1);
 
-        HashMap<String, String> coursMaths = new HashMap<>();
-        coursMaths.put("nom", "Maths");
-        coursMaths.put("note", "15");
-        listeCours.add(coursMaths);
+        HashMap<String, String> exp2 = new HashMap<>();
+        exp2.put("nom", "Consultant JAVA");
+        exp2.put("entreprise", "BNP Paribas");
+        exp2.put("date", "03/2018 à 05/2019");
+        experiencesPro.add(exp2);
 
-        ForLoop cours = ObjectIterator.getLoop(listeCours);
+        ForLoop experiencesProIterator = ObjectIterator.getLoop(experiencesPro);
 
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
-        context.put("nomEleve", "Jordan");
+        context.put("nomEmploye", "Vincent MARTIN");
         context.put("dateNaissance", "03/03/1995");
-        context.put("cours", cours);
+        context.put("experiencesPro", experiencesProIterator);
 
         String renderedTemplate = jinjava.render(cleanXml, context);
 

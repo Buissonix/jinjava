@@ -4,45 +4,44 @@ import com.google.common.collect.Maps;
 import com.hubspot.jinjava.util.ForLoop;
 import com.hubspot.jinjava.util.ObjectIterator;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestForLoop {
+public class TestForLoop2 {
 
     // teste le remplacement des champs simples et des boucles
     public static void main(String[] args) throws IOException {
 
-        File inputFile = new File("src/main/resources/loop.txt");
+        File inputFile = new File("src/main/resources/loopEmploye.txt");
         String inputString = readFile(inputFile.getPath());
 
-        List<HashMap<String,String>> listeCours1 = new ArrayList<>();
-        List<HashMap<String,String>> listeCours2 = new ArrayList<>();
-        List<HashMap<String,String>> listeEleves = new ArrayList<>();
+        List<HashMap<String,String>> experiencesPro = new ArrayList<>();
 
-        HashMap<String, String> eleve1 = new HashMap<>();
-        HashMap<String, String> eleve2 = new HashMap<>();
+        HashMap<String, String> exp1 = new HashMap<>();
+        exp1.put("nom", "Développeur back-end JAVA");
+        exp1.put("entreprise", "Crédit Agricole");
+        exp1.put("date", "06/2019 à 06/2020");
+        experiencesPro.add(exp1);
 
+        HashMap<String, String> exp2 = new HashMap<>();
+        exp2.put("nom", "Consultant JAVA");
+        exp2.put("entreprise", "BNP Paribas");
+        exp2.put("date", "03/2018 à 05/2019");
+        experiencesPro.add(exp2);
 
-        HashMap<String, String> coursFrancais = new HashMap<>();
-        coursFrancais.put("nom", "Français");
-        coursFrancais.put("note", "18");
-        listeCours1.add(coursFrancais);
-
-        HashMap<String, String> coursMaths = new HashMap<>();
-        coursMaths.put("nom", "Maths");
-        coursMaths.put("note", "15");
-        listeCours1.add(coursMaths);
-
-        ForLoop cours = ObjectIterator.getLoop(listeCours1);
+        ForLoop experiencesProIterator = ObjectIterator.getLoop(experiencesPro);
 
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
-        context.put("nomEleve", "Jordan");
+        context.put("nomEmploye", "Vincent MARTIN");
         context.put("dateNaissance", "03/03/1995");
-        context.put("cours", cours);
+        context.put("experiencesPro", experiencesProIterator);
 
         String renderedTemplate = jinjava.render(inputString, context);
         System.out.println(renderedTemplate);
