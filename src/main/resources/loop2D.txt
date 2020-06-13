@@ -1,0 +1,14 @@
+{{nomEmploye}}
+
+{{dateNaissance}}
+
+{% for experience in experiencesPro %}
+{{experience.nom}}
+{{experience.entreprise}}
+{{experience.date}}
+{% for tache in experience.taches %}
+- A{{tache.nom}}
+- B{{tache.technos}}
+{% endfor %}
+------------------
+{% endfor %}

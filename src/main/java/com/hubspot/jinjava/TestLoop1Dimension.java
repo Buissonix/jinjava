@@ -4,21 +4,18 @@ import com.google.common.collect.Maps;
 import com.hubspot.jinjava.util.ForLoop;
 import com.hubspot.jinjava.util.ObjectIterator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestForLoop2 {
+public class TestLoop1Dimension {
 
-    // teste le remplacement des champs simples et des boucles
+    // teste le remplacement des boucles simples (sans boucles imbriquées)
     public static void main(String[] args) throws IOException {
 
-        File inputFile = new File("src/main/resources/loopEmploye.txt");
+        File inputFile = new File("src/main/resources/loop1D.txt");
         String inputString = readFile(inputFile.getPath());
 
         List<HashMap<String,String>> experiencesPro = new ArrayList<>();
@@ -50,7 +47,7 @@ public class TestForLoop2 {
 
     }
 
-    // Récupère le contenu de loop.txt dans une String
+    // Récupère le contenu de loop1D.txt dans une String
     private static String readFile(String file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String         line = null;

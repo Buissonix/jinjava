@@ -1,0 +1,16 @@
+Vincent MARTIN03/03/1995
+Développeur back-end JAVA
+Crédit Agricole
+06/2019 à 06/2020
+- AMigration BDD
+- BUML
+- ARajout de données métier
+- BSpring
+------------------
+Consultant JAVABNP Paribas
+03/2018 à 05/2019
+- AInspection du code pour mettre à jour JAVA
+- BJava
+- AUpgrade de java de 1.8 à 1.11
+- BJava
+------------------

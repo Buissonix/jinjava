@@ -1,7 +1,0 @@
-{{nomEleve}}
-{{dateNaissance}}
-{% for matiere in cours %}
-{{matiere.nom}}
-{{matiere.note}}
------
-{% endfor %}
