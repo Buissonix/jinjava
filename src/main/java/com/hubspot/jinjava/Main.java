@@ -181,24 +181,54 @@ public class Main {
         // Remplacer les champs par les valeurs souhaitées
         System.out.println("Jinja processing...");
 
-        List<HashMap<String,String>> experiencesPro = new ArrayList<>();
+        List<Object> experiencesPro = new ArrayList<>();
 
-        HashMap<String, String> exp1 = new HashMap<>();
-        exp1.put("nom", "Développeur back-end JAVA");
-        exp1.put("entreprise", "Crédit Agricole");
-        exp1.put("date", "06/2019 à 06/2020");
-        experiencesPro.add(exp1);
+        // Taches
+        List<Map<String, Object>> listeTachesExp1 = new ArrayList<>();
+        List<Map<String, Object>> listeTachesExp2 = new ArrayList<>();
+        HashMap<String,Object> exp1_tache1 = new HashMap<>();
+        exp1_tache1.put("nom", "Expérience 1 tâche 1");
+        exp1_tache1.put("technos", "Spring");
+        listeTachesExp1.add(exp1_tache1);
+        HashMap<String,Object> exp1_tache2 = new HashMap<>();
+        exp1_tache2.put("nom", "Expérience 1 tâche 2");
+        exp1_tache2.put("technos", "UML");
+        listeTachesExp1.add(exp1_tache2);
+        HashMap<String,Object> exp2_tache1 = new HashMap<>();
+        exp2_tache1.put("nom", "Expérience 2 tâche 1");
+        exp2_tache1.put("technos", "Hibernate");
+        listeTachesExp2.add(exp2_tache1);
+        HashMap<String,Object> exp2_tache2 = new HashMap<>();
+        exp2_tache2.put("nom", "Expérience 2 tâche 2");
+        exp2_tache2.put("technos", "Spring");
+        listeTachesExp2.add(exp2_tache2);
+        HashMap<String,Object> exp2_tache3 = new HashMap<>();
+        exp2_tache3.put("nom", "Expérience 2 tâche 3");
+        exp2_tache3.put("technos", "Angular");
+        listeTachesExp2.add(exp2_tache3);
 
-        HashMap<String, String> exp2 = new HashMap<>();
-        exp2.put("nom", "Consultant JAVA");
-        exp2.put("entreprise", "BNP Paribas");
-        exp2.put("date", "03/2018 à 05/2019");
-        experiencesPro.add(exp2);
+        Map<String, Object> experience1 = new HashMap<>();
+        experience1.put("nom", "Développeur back-end JAVA");
+        experience1.put("entreprise", "Crédit Agricole");
+        experience1.put("date", "06/2019 à 06/2020");
+        experience1.put("taches", ObjectIterator.getLoop(listeTachesExp1));
+        experiencesPro.add(experience1);
+
+        HashMap<String, Object> experience2 = new HashMap<>();
+        experience2.put("nom", "Consultant JAVA");
+        experience2.put("entreprise", "BNP Paribas");
+        experience2.put("date", "03/2018 à 05/2019");
+        experience2.put("taches", ObjectIterator.getLoop(listeTachesExp2));
+        experiencesPro.add(experience2);
 
         ForLoop experiencesProIterator = ObjectIterator.getLoop(experiencesPro);
 
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
+        //Outils de mise en forme
+        context.put("lineBreak", "<w:br w:type=\"textWrapping\"/>");
+        context.put("pageBreak", "<w:br w:type=\"page\"/>");
+        //Données
         context.put("nomEmploye", "Vincent MARTIN");
         context.put("dateNaissance", "03/03/1995");
         context.put("experiencesPro", experiencesProIterator);
