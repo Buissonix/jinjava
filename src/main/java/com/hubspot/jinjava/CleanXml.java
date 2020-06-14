@@ -10,22 +10,23 @@ public class CleanXml {
 
     // le main ne sert qu'à des fins de test
     public static void main(String[] args) throws IOException, InterruptedException {
-//
-//        contenuDuXml = readFile("src/main/resources/template/word/document.xml");
-//
-//        // output le contenu du XML initial dans input.txt
-//        File input = new File("src/main/resources/input.txt");
-//        BufferedWriter writer = new BufferedWriter(new FileWriter(input.getPath()));
-//        writer.write(contenuDuXml);
-//        writer.close();
-//
-//        corrigerXML();
-//
-//        // output le contenu du XML corrigé dans output.txt
-//        File output = new File("src/main/resources/output.txt");
-//        writer = new BufferedWriter(new FileWriter(output.getPath()));
-//        writer.write(contenuDuXml);
-//        writer.close();
+
+        contenuDuXml = readFile("src/main/resources/template/word/document.xml");
+        //contenuDuXml = readFile("src/main/resources/input.txt");
+
+        // output le contenu du XML initial dans input.txt
+        File input = new File("src/main/resources/input.txt");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(input.getPath()));
+        writer.write(contenuDuXml);
+        writer.close();
+
+        corrigerXML();
+
+        // output le contenu du XML corrigé dans output.txt
+        File output = new File("src/main/resources/output.txt");
+        writer = new BufferedWriter(new FileWriter(output.getPath()));
+        writer.write(contenuDuXml);
+        writer.close();
     }
 
     private static String contenuDuXml;
@@ -57,10 +58,24 @@ public class CleanXml {
         }
     }
 
-    // Echappe les caractères meta pour la regex
+    // Echappe les caractères meta pour la recherche regex
     private static String escapeMetaCharacters(String inputString){
         //final String[] allMetaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
         final String[] metaCharacters = {"\\","$","{","}","<",">","|","-","&","%"};
+
+        for (int i = 0 ; i < metaCharacters.length ; i++){
+            if(inputString.contains(metaCharacters[i])){
+                inputString = inputString.replace(metaCharacters[i],"\\"+metaCharacters[i]);
+            }
+        }
+        //System.out.println("Escaped regex String: " + inputString);
+        return inputString;
+    }
+
+    // Echappe les caractères meta pour le remplacement via regex
+    private static String escapeMetaCharactersRemplacement(String inputString){
+        //final String[] allMetaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
+        final String[] metaCharacters = {"\\","$","{","}","<",">","|","-","&","%","(",")","[","]"};
 
         for (int i = 0 ; i < metaCharacters.length ; i++){
             if(inputString.contains(metaCharacters[i])){
@@ -108,6 +123,15 @@ public class CleanXml {
         return liste;
     }
 
+    // Enlève les champs qui ne posent pas de problème
+    private static List<String> enleverChampsSains(List<String> listeMatchs){
+        List<String> listeProbleme = new ArrayList<>();
+        for (String match: listeMatchs){
+            if (match.indexOf("<") != -1) listeProbleme.add(match);
+        }
+        return listeProbleme;
+    }
+
     // Supprime les balises <XML> à l'intérieur d'un champ à remplacer
     private static List<String> cleanBalises(List<String> listeProbleme) {
         String regexBalise = "<.*?>";
@@ -152,7 +176,7 @@ public class CleanXml {
 
         if (!(listeChampsARemplacer.isEmpty())){
             for (int i = 0; i < listeChampsARemplacer.size(); i++){
-                setContenuDuXml(contenuDuXml.replaceAll(escapeMetaCharacters(listeChampsARemplacer.get(i)), listeClean.get(i)));
+                setContenuDuXml(contenuDuXml.replaceAll(escapeMetaCharactersRemplacement(listeChampsARemplacer.get(i)), listeClean.get(i)));
                 System.out.println("----");
                 System.out.println("La string :");
                 System.out.println(listeChampsARemplacer.get(i));
@@ -163,7 +187,7 @@ public class CleanXml {
         }
     }
 
-    // Enlève le XML indésirable qui se rajoute tout seul pour éviter que jinjava ne génère une exception.
+    // Enlève le XML indésirable qui se rajoute tout seul pour éviter que jinjava ne génère une exception
     static void corrigerXML(){
         System.out.println();
         System.out.println("Vérification du template...");
@@ -173,30 +197,55 @@ public class CleanXml {
         List<String> listeRegex = new ArrayList<>();
 
         // Pour supprimer les balises xml
-        String regexChampSimple = "({{(?:[^><}]*?)(?:<[^}]*?)}}).*?";
-        String regexForLoop = "({%(?:[^><}]*?)(?:<[^}]*?)%}).*?";
+        String regexChampSimple = "({(?:[^{}]*?{[^{}]*?}[^{}]*?})).*?";
+        String regexIfElseFor = "({(?:[^{}%]*?%[^{}%]*?%[^{}]*?})).*?";
 
-        listeRegex.add(regexChampSimple); listeRegex.add(regexForLoop);
+        listeRegex.add(regexChampSimple); listeRegex.add(regexIfElseFor);
 
         for (String regex: listeRegex){
             listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regex), contenuDuXml);
             listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+            listeChampsARemplacer = enleverChampsSains(listeChampsARemplacer);
             listeChampsPropres = cleanBalises(listeChampsARemplacer);
             reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
         }
         listeChampsARemplacer.clear(); listeChampsPropres.clear(); listeRegex.clear();
 
-        // Pour corriger tous les mauvais {% endfor %} à la volée
-        String regexEndLoop = "({%(?:[^%])*?endfor(?:[^%])*?%}).*?";
-
-        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
-        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
-        int indexNormal = listeChampsARemplacer.indexOf("{% endfor %}");
-        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
-        for (String match : listeChampsARemplacer) {
-            listeChampsPropres.add("{% endfor %}");
-        }
-        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+//        // Pour corriger tous les mauvais {% endfor %} à la volée
+//        String regexEndLoop = "({(?:[^%])*?%(?:[^%])*?endfor(?:[^%}])*?%(?:[^}])*?}).*?";
+//
+//        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
+//        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+//        int indexNormal = listeChampsARemplacer.indexOf("{% endfor %}");
+//        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
+//        for (String match : listeChampsARemplacer) {
+//            listeChampsPropres.add("{% endfor %}");
+//        }
+//        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+//
+//        // Pour corriger tous les mauvais {% endif %} à la volée
+//        String regexEndIf = "({(?:[^%])*?%(?:[^%])*?endif(?:[^%}])*?%(?:[^}])*?}).*?";
+//
+//        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndIf), contenuDuXml);
+//        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+//        indexNormal = listeChampsARemplacer.indexOf("{% endif %}");
+//        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
+//        for (String match : listeChampsARemplacer) {
+//            listeChampsPropres.add("{% endif %}");
+//        }
+//        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
+//
+//        // Pour corriger tous les mauvais {% else %} à la volée
+//        String regexElse = "({(?:[^%])*?%(?:[^%])*?else(?:[^%}])*?%(?:[^}])*?}).*?";
+//
+//        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexElse), contenuDuXml);
+//        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
+//        indexNormal = listeChampsARemplacer.indexOf("{% else %}");
+//        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
+//        for (String match : listeChampsARemplacer) {
+//            listeChampsPropres.add("{% else %}");
+//        }
+//        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
 
         System.out.println("Template vérifié ou corrigé.");
 
