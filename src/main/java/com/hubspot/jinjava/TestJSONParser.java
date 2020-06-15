@@ -10,20 +10,20 @@ public class TestJSONParser {
 
     public static void main(String args[]) {
         ObjectMapper mapper = new ObjectMapper();
-
-
-        /**
-         * Read JSON from a file into a Map
-         */
+        String inputString = "{{Boston.id}} // {{Boston.address}} // {{Rajout}}";
         try {
-            Map<String, Object> carMap = mapper.readValue(new File(
-                    "src/main/resources/dict2.txt"), new TypeReference<Map<String, Object>>() {
+            Map<String, Object> context = mapper.readValue(new File(
+                    "src/main/resources/dict3.txt"), new TypeReference<Map<String, Object>>() {
             });
 
-            System.out.println("car : " + carMap.get("car"));
-            System.out.println("Price : " + carMap.get("price"));
-            System.out.println("Model : " + carMap.get("model"));
-            System.out.println("Colors : " + carMap.get("colors"));
+            context.put("Rajout", "ceci a été rajouté avec context.put()");
+
+            Jinjava jinjava = new Jinjava();
+            String renderedTemplate = jinjava.render(inputString, context);
+
+            System.out.println(renderedTemplate);
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
