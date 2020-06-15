@@ -211,42 +211,6 @@ public class CleanXml {
         }
         listeChampsARemplacer.clear(); listeChampsPropres.clear(); listeRegex.clear();
 
-//        // Pour corriger tous les mauvais {% endfor %} à la volée
-//        String regexEndLoop = "({(?:[^%])*?%(?:[^%])*?endfor(?:[^%}])*?%(?:[^}])*?}).*?";
-//
-//        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndLoop), contenuDuXml);
-//        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
-//        int indexNormal = listeChampsARemplacer.indexOf("{% endfor %}");
-//        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
-//        for (String match : listeChampsARemplacer) {
-//            listeChampsPropres.add("{% endfor %}");
-//        }
-//        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
-//
-//        // Pour corriger tous les mauvais {% endif %} à la volée
-//        String regexEndIf = "({(?:[^%])*?%(?:[^%])*?endif(?:[^%}])*?%(?:[^}])*?}).*?";
-//
-//        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexEndIf), contenuDuXml);
-//        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
-//        indexNormal = listeChampsARemplacer.indexOf("{% endif %}");
-//        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
-//        for (String match : listeChampsARemplacer) {
-//            listeChampsPropres.add("{% endif %}");
-//        }
-//        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
-//
-//        // Pour corriger tous les mauvais {% else %} à la volée
-//        String regexElse = "({(?:[^%])*?%(?:[^%])*?else(?:[^%}])*?%(?:[^}])*?}).*?";
-//
-//        listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regexElse), contenuDuXml);
-//        listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
-//        indexNormal = listeChampsARemplacer.indexOf("{% else %}");
-//        if (indexNormal != -1) listeChampsARemplacer.remove(indexNormal);
-//        for (String match : listeChampsARemplacer) {
-//            listeChampsPropres.add("{% else %}");
-//        }
-//        reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
-
         System.out.println("Template vérifié ou corrigé.");
 
     }
