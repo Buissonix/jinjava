@@ -1,11 +1,6 @@
 {
-    "": {
-        "address": "",
-        "cAbbrv": "",
-        "link" : ""
-    },
     "Boston": {
-        "id":1,
+        "id":"",
         "cAbbrv":"BOS",
         "city":"Boston",
         "address":"4 Avery Street at Tremont - Boston, MA 02111",

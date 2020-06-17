@@ -1,0 +1,21 @@
+{
+  "IdProfile": "",
+  "Address": "",
+  "Zipcode": "",
+  "DateOfBirth": "",
+  "Email": "",
+  "PhotoFileName": "",
+  "LastName": "",
+  "FirstName": "",
+  "PhoneNumber": "",
+  "Nationality": "",
+  "City": "",
+  "Hobbies":{
+    "Hobby1": "",
+    "Hobby2": "",
+    "Hobby3": ""
+  },
+  "Languages":{
+
+  }
+}
