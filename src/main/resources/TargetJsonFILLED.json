@@ -49,7 +49,7 @@
   ],
   "Certifications": [
     {
-      "CertifTitle": "Java Developer level one",
+      "CertifTitle": "Java Developer certification level one",
       "CertifLanguage": "Anglais"
     },
     {
@@ -60,117 +60,105 @@
   "Technologies": [
     {
       "TechName": "Java",
-      "TechLevel": "",
+      "TechLevel": "Senior",
       "TechPrinciples": [
         {
-          "PrincipleName": ""
+          "PrincipleName": "OOP"
         },
         {
-          "PrincipleName": ""
+          "PrincipleName": "Desktop application"
         }
       ]
     },
     {
-      "TechName": "Java",
-      "TechLevel": "",
+      "TechName": "Spring",
+      "TechLevel": "Senior",
       "TechPrinciples": [
         {
-          "PrincipleName": ""
+          "PrincipleName": "Dependency Injection"
         },
         {
-          "PrincipleName": ""
+          "PrincipleName": "Object Relational Mapping"
         }
       ]
     }
   ],
   "WorkExperiences":[
     {
-      "WorkExpStart": "",
-      "WorkExpEnd": "",
-      "WorkExpCompany": "",
-      "WorkExpCity": "",
-      "WorkExpPosition": "",
-      "WorkExpTitle": "",
-      "WorkExpDescription": "",
-      "WorkExpLanguage": "",
+      "WorkExpStart": "2002",
+      "WorkExpEnd": "2010",
+      "WorkExpCompany": "France Telecom",
+      "WorkExpCity": "Paris",
+      "WorkExpPosition": "Développeur Java",
+      "WorkExpTitle": "?",
+      "WorkExpDescription": "Développement principalement en Java pour des gros projets d'entreprise",
+      "WorkExpLanguage": "Français",
       "WorkExpTasks":[
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": "Codage de modules réutilisables et scalables pour prototyper de gros logiciels rapidement",
+          "TaskLanguage": "Français"
         },
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": "Supervisation d'une équipe et réalisation du projet dans les délais impartis",
+          "TaskLanguage": "Français"
         }
       ],
       "WorkExpTechnologies": [
       {
         "TechName": "Java",
-        "TechLevel": "",
+        "TechLevel": "Senior",
         "TechPrinciples": [
           {
-            "PrincipleName": ""
+            "PrincipleName": "OOP"
           },
           {
-            "PrincipleName": ""
-          }
-        ]
-      },
-      {
-        "TechName": "Java",
-        "TechLevel": "",
-        "TechPrinciples": [
-          {
-            "PrincipleName": ""
-          },
-          {
-            "PrincipleName": ""
+            "PrincipleName": "Desktop application"
           }
         ]
       }
     ]
     },
     {
-      "WorkExpStart": "",
-      "WorkExpEnd": "",
-      "WorkExpCompany": "",
-      "WorkExpCity": "",
-      "WorkExpPosition": "",
-      "WorkExpTitle": "",
-      "WorkExpDescription": "",
-      "WorkExpLanguage": "",
+      "WorkExpStart": "2010",
+      "WorkExpEnd": "2019",
+      "WorkExpCompany": "Esso",
+      "WorkExpCity": "Londres",
+      "WorkExpPosition": "Senior développeur Java Spring",
+      "WorkExpTitle": "?",
+      "WorkExpDescription": "Maintenance et mise à jour du code java, intégration de Spring au code existant",
+      "WorkExpLanguage": "?",
       "WorkExpTasks":[
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": "Conversion des connexions et requêtes database vers Spring",
+          "TaskLanguage": "Français"
         },
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": "Mise à jour du code Java vers la version 11",
+          "TaskLanguage": "Français"
         }
       ],
       "WorkExpTechnologies": [
         {
-          "TechName": "Java",
-          "TechLevel": "",
+          "TechName": "Spring",
+          "TechLevel": "Senior",
           "TechPrinciples": [
             {
-              "PrincipleName": ""
+              "PrincipleName": "Dependency Injection"
             },
             {
-              "PrincipleName": ""
+              "PrincipleName": "Object Relational Mapping"
             }
           ]
         },
         {
           "TechName": "Java",
-          "TechLevel": "",
+          "TechLevel": "Senior",
           "TechPrinciples": [
             {
-              "PrincipleName": ""
+              "PrincipleName": "OOP"
             },
             {
-              "PrincipleName": ""
+              "PrincipleName": "Desktop application"
             }
           ]
         }
