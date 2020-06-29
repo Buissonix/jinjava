@@ -1,0 +1,180 @@
+{
+  "IdProfile": "23",
+  "FirstName": "Jean",
+  "LastName": "Dupont",
+  "DateOfBirth": "15//12/1979",
+  "Nationality": "Français",
+  "Address": "21 rue Foch",
+  "Zipcode": "54430",
+  "LivingCity": "Longwy",
+  "LivingCountry": "France",
+  "Email": "jean.dupont@gmail.com",
+  "PhoneNumber": "0622334455",
+  "PhotoFileName": "jean_dupont.jpg",
+  "Hobbies":[
+    {
+      "HobbyName": "Escalade"
+    },
+    {
+      "HobbyName": "Astronomie"
+    }
+  ],
+  "Languages":[
+    {
+    "LanguageName": "Français",
+    "FluencyWrittenComprehension": "Courant",
+    "FluencyWrittenExpression": "Courant",
+    "FluencyOralComprehension": "Courant",
+    "FluencyOralExpression": "Courant",
+    "FluencyTechnicalVocab": "Courant"
+    },
+    {
+    "LanguageName": "Anglais",
+    "FluencyWrittenComprehension": "Avancé",
+    "FluencyWrittenExpression": "Basique",
+    "FluencyOralComprehension": "Niveau professionnel",
+    "FluencyOralExpression": "Niveau moyen",
+    "FluencyTechnicalVocab": "Niveau professionnel"
+    }
+  ],
+  "Education": [
+    {
+    "EducationTitle": "Master en ingénieurie informatique",
+    "EducationLanguage": "Français"
+    },
+    {
+    "EducationTitle": "Licence d'ingénieur",
+    "EducationLanguage": "Français"
+    }
+  ],
+  "Certifications": [
+    {
+      "CertifTitle": "Java Developer level one",
+      "CertifLanguage": "Anglais"
+    },
+    {
+      "CertifTitle": "Oracle database master",
+      "CertifLanguage": "Anglais"
+    }
+  ],
+  "Technologies": [
+    {
+      "TechName": "Java",
+      "TechLevel": "",
+      "TechPrinciples": [
+        {
+          "PrincipleName": ""
+        },
+        {
+          "PrincipleName": ""
+        }
+      ]
+    },
+    {
+      "TechName": "Java",
+      "TechLevel": "",
+      "TechPrinciples": [
+        {
+          "PrincipleName": ""
+        },
+        {
+          "PrincipleName": ""
+        }
+      ]
+    }
+  ],
+  "WorkExperiences":[
+    {
+      "WorkExpStart": "",
+      "WorkExpEnd": "",
+      "WorkExpCompany": "",
+      "WorkExpCity": "",
+      "WorkExpPosition": "",
+      "WorkExpTitle": "",
+      "WorkExpDescription": "",
+      "WorkExpLanguage": "",
+      "WorkExpTasks":[
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        },
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        }
+      ],
+      "WorkExpTechnologies": [
+      {
+        "TechName": "Java",
+        "TechLevel": "",
+        "TechPrinciples": [
+          {
+            "PrincipleName": ""
+          },
+          {
+            "PrincipleName": ""
+          }
+        ]
+      },
+      {
+        "TechName": "Java",
+        "TechLevel": "",
+        "TechPrinciples": [
+          {
+            "PrincipleName": ""
+          },
+          {
+            "PrincipleName": ""
+          }
+        ]
+      }
+    ]
+    },
+    {
+      "WorkExpStart": "",
+      "WorkExpEnd": "",
+      "WorkExpCompany": "",
+      "WorkExpCity": "",
+      "WorkExpPosition": "",
+      "WorkExpTitle": "",
+      "WorkExpDescription": "",
+      "WorkExpLanguage": "",
+      "WorkExpTasks":[
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        },
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        }
+      ],
+      "WorkExpTechnologies": [
+        {
+          "TechName": "Java",
+          "TechLevel": "",
+          "TechPrinciples": [
+            {
+              "PrincipleName": ""
+            },
+            {
+              "PrincipleName": ""
+            }
+          ]
+        },
+        {
+          "TechName": "Java",
+          "TechLevel": "",
+          "TechPrinciples": [
+            {
+              "PrincipleName": ""
+            },
+            {
+              "PrincipleName": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
