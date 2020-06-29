@@ -21,30 +21,29 @@
   ],
   "Languages":[
     {
-    "LanguageName": "",
-    "FluencyWrittenComprehension": "",
-    "FluencyWrittenExpression": "",
-    "FluencyOralComprehension": "",
-    "FluencyOralExpression": "",
-    "FluencyTechnicalVocab": ""
+      "LanguageName": "",
+      "FluencyWrittenComprehension": "",
+      "FluencyWrittenExpression": "",
+      "FluencyOralComprehension": "",
+      "FluencyOralExpression": "",
     },
     {
-    "LanguageName": "",
-    "FluencyWrittenComprehension": "",
-    "FluencyWrittenExpression": "",
-    "FluencyOralComprehension": "",
-    "FluencyOralExpression": "",
-    "FluencyTechnicalVocab": ""
+      "LanguageName": "",
+      "FluencyWrittenComprehension": "",
+      "FluencyWrittenExpression": "",
+      "FluencyOralComprehension": "",
+      "FluencyOralExpression": "",
+      "FluencyTechnicalVocab": ""
     }
   ],
   "Education": [
     {
-    "EducationTitle": "",
-    "EducationLanguage": ""
+      "EducationTitle": "",
+      "EducationLanguage": ""
     },
     {
-    "EducationTitle": "",
-    "EducationLanguage": ""
+      "EducationTitle": "",
+      "EducationLanguage": ""
     }
   ],
   "Certifications": [
@@ -60,13 +59,27 @@
   "Technologies": [
     {
       "TechName": "",
-      "TechPrinciple": "",
-      "TechLevel": ""
+      "TechLevel": "",
+      "TechPrinciples": [
+        {
+          "PrincipleName": ""
+        },
+        {
+          "PrincipleName": ""
+        }
+      ]
     },
     {
       "TechName": "",
-      "TechPrinciple": "",
-      "TechLevel": ""
+      "TechLevel": "",
+      "TechPrinciples": [
+        {
+          "PrincipleName": ""
+        },
+        {
+          "PrincipleName": ""
+        }
+      ]
     }
   ],
   "WorkExperiences":[
@@ -89,16 +102,30 @@
           "TaskLanguage": ""
         }
       ],
-      "Technologies": [
+      "WorkExpTechnologies": [
         {
           "TechName": "",
-          "TechPrinciple": "",
-          "TechLevel": ""
+          "TechLevel": "",
+          "TechPrinciples": [
+            {
+              "PrincipleName": ""
+            },
+            {
+              "PrincipleName": ""
+            }
+          ]
         },
         {
           "TechName": "",
-          "TechPrinciple": "",
-          "TechLevel": ""
+          "TechLevel": "",
+          "TechPrinciples": [
+            {
+              "PrincipleName": ""
+            },
+            {
+              "PrincipleName": ""
+            }
+          ]
         }
       ]
     },
@@ -121,16 +148,30 @@
           "TaskLanguage": ""
         }
       ],
-      "Technologies": [
+      "WorkExpTechnologies": [
         {
           "TechName": "",
-          "TechPrinciple": "",
-          "TechLevel": ""
+          "TechLevel": "",
+          "TechPrinciples": [
+            {
+              "PrincipleName": ""
+            },
+            {
+              "PrincipleName": ""
+            }
+          ]
         },
         {
           "TechName": "",
-          "TechPrinciple": "",
-          "TechLevel": ""
+          "TechLevel": "",
+          "TechPrinciples": [
+            {
+              "PrincipleName": ""
+            },
+            {
+              "PrincipleName": ""
+            }
+          ]
         }
       ]
     }
