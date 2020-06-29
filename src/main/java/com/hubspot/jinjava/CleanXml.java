@@ -58,7 +58,7 @@ public class CleanXml {
         }
     }
 
-    // Echappe les caractères meta pour la recherche regex
+    // Echape les caractères meta pour la recherche regex
     private static String escapeMetaCharacters(String inputString){
         //final String[] allMetaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
         final String[] metaCharacters = {"\\","$","{","}","<",">","|","-","&","%"};
@@ -72,7 +72,7 @@ public class CleanXml {
         return inputString;
     }
 
-    // Echappe les caractères meta pour le remplacement via regex
+    // Echape les caractères meta pour le remplacement via regex
     private static String escapeMetaCharactersRemplacement(String inputString){
         //final String[] allMetaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
         final String[] metaCharacters = {"\\","$","{","}","<",">","|","-","&","%","(",")","[","]"};
@@ -133,7 +133,7 @@ public class CleanXml {
     }
 
     // Supprime les balises <XML> à l'intérieur d'un champ à remplacer
-    private static List<String> cleanBalises(List<String> listeProbleme) {
+    private static List<String> cleanBalisesIndesirables(List<String> listeProbleme) {
         String regexBalise = "<.*?>";
         String escapedRegex = escapeMetaCharacters(regexBalise);
         List<String> listeClean = new ArrayList<>(listeProbleme);
@@ -206,7 +206,7 @@ public class CleanXml {
             listeChampsARemplacer = retournerListeMatchs(escapeMetaCharacters(regex), contenuDuXml);
             listeChampsARemplacer = enleverDoublonListe(listeChampsARemplacer);
             listeChampsARemplacer = enleverChampsSains(listeChampsARemplacer);
-            listeChampsPropres = cleanBalises(listeChampsARemplacer);
+            listeChampsPropres = cleanBalisesIndesirables(listeChampsARemplacer);
             reinjecterChampsPropres(listeChampsARemplacer, listeChampsPropres);
         }
         listeChampsARemplacer.clear(); listeChampsPropres.clear(); listeRegex.clear();

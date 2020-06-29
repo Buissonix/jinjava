@@ -48,17 +48,6 @@ public class ProfilJson {
 
         // Hobbies
         tree = mapper.readTree(new URL(URL_SERVEUR + "/profils/" + idProfil + "/listeHobby")).at("/_embedded/loisirs");
-//        List<String> hobbiesLinks = getValuesAtPath(tree, "/_links/self/href");
-//        System.out.println("links" + hobbiesLinks);
-//        List<String> hobbiesList = new ArrayList<>();
-//        hobbiesLinks.forEach(x -> {
-//            try {
-//                hobbiesList.add(getValueAtPath(x,"/_links/self/href"));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//        System.out.println("list :" + hobbiesList);
         List<String> hobbiesList = getValuesAtPath(tree, "/idLoisir/idLoisir");
         rootNode.set("Hobbies", arrayNodeFromList(hobbiesList));
 
@@ -169,16 +158,16 @@ public class ProfilJson {
         return json;
     }
 
-    private static List<String> getValuesAtPath(JsonNode parentNode, String pathToLink){
+    private static List<String> getValuesAtPath(JsonNode parentNode, String path){
         List<String> values = new ArrayList<>();
-        Consumer<JsonNode> processData = (JsonNode node) -> values.add((node.at(pathToLink).asText()));
+        Consumer<JsonNode> processData = (JsonNode node) -> values.add((node.at(path).asText()));
         parentNode.forEach(processData);
         return values;
     }
 
-    private static String getValueAtPath(String urlString, String pathToLink) throws IOException {
+    private static String getValueAtPath(String urlString, String path) throws IOException {
         URL url = new URL(urlString);
-        return new ObjectMapper().readTree(url).at(pathToLink).asText();
+        return new ObjectMapper().readTree(url).at(path).asText();
     }
 
     private static ArrayNode arrayNodeFromList(List<String> list){

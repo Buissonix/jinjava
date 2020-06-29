@@ -1,21 +1,138 @@
 {
   "IdProfile": "",
+  "FirstName": "",
+  "LastName": "",
+  "DateOfBirth": "",
+  "Nationality": "",
   "Address": "",
   "Zipcode": "",
-  "DateOfBirth": "",
+  "LivingCity": "",
+  "LivingCountry": "",
   "Email": "",
-  "PhotoFileName": "",
-  "LastName": "",
-  "FirstName": "",
   "PhoneNumber": "",
-  "Nationality": "",
-  "City": "",
-  "Hobbies":{
-    "Hobby1": "",
-    "Hobby2": "",
-    "Hobby3": ""
-  },
-  "Languages":{
-
-  }
+  "PhotoFileName": "",
+  "Hobbies":[
+    {
+      "HobbyName": ""
+    },
+    {
+      "HobbyName": ""
+    }
+  ],
+  "Languages":[
+    {
+    "LanguageName": "",
+    "FluencyWrittenComprehension": "",
+    "FluencyWrittenExpression": "",
+    "FluencyOralComprehension": "",
+    "FluencyOralExpression": "",
+    "FluencyTechnicalVocab": ""
+    },
+    {
+    "LanguageName": "",
+    "FluencyWrittenComprehension": "",
+    "FluencyWrittenExpression": "",
+    "FluencyOralComprehension": "",
+    "FluencyOralExpression": "",
+    "FluencyTechnicalVocab": ""
+    }
+  ],
+  "Education": [
+    {
+    "EducationTitle": "",
+    "EducationLanguage": ""
+    },
+    {
+    "EducationTitle": "",
+    "EducationLanguage": ""
+    }
+  ],
+  "Certifications": [
+    {
+      "CertifTitle": "",
+      "CertifLanguage": ""
+    },
+    {
+      "CertifTitle": "",
+      "CertifLanguage": ""
+    }
+  ],
+  "Technologies": [
+    {
+      "TechName": "",
+      "TechPrinciple": "",
+      "TechLevel": ""
+    },
+    {
+      "TechName": "",
+      "TechPrinciple": "",
+      "TechLevel": ""
+    }
+  ],
+  "WorkExperiences":[
+    {
+      "WorkExpStart": "",
+      "WorkExpEnd": "",
+      "WorkExpCompany": "",
+      "WorkExpCity": "",
+      "WorkExpPosition": "",
+      "WorkExpTitle": "",
+      "WorkExpDescription": "",
+      "WorkExpLanguage": "",
+      "WorkExpTasks":[
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        },
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        }
+      ],
+      "Technologies": [
+        {
+          "TechName": "",
+          "TechPrinciple": "",
+          "TechLevel": ""
+        },
+        {
+          "TechName": "",
+          "TechPrinciple": "",
+          "TechLevel": ""
+        }
+      ]
+    },
+    {
+      "WorkExpStart": "",
+      "WorkExpEnd": "",
+      "WorkExpCompany": "",
+      "WorkExpCity": "",
+      "WorkExpPosition": "",
+      "WorkExpTitle": "",
+      "WorkExpDescription": "",
+      "WorkExpLanguage": "",
+      "WorkExpTasks":[
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        },
+        {
+          "TaskName": "",
+          "TaskLanguage": ""
+        }
+      ],
+      "Technologies": [
+        {
+          "TechName": "",
+          "TechPrinciple": "",
+          "TechLevel": ""
+        },
+        {
+          "TechName": "",
+          "TechPrinciple": "",
+          "TechLevel": ""
+        }
+      ]
+    }
+  ]
 }
