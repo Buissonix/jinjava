@@ -39,22 +39,18 @@
   ],
   "Education": [
     {
-    "EducationTitle": "Master en ingénieurie informatique",
-    "EducationLanguage": "Français"
+    "EducationTitle": "Master en ingénieurie informatique"
     },
     {
-    "EducationTitle": "Licence d'ingénieur",
-    "EducationLanguage": "Français"
+    "EducationTitle": "Licence d'ingénieur"
     }
   ],
   "Certifications": [
     {
-      "CertifTitle": "Java Developer certification level one",
-      "CertifLanguage": "Anglais"
+      "CertifTitle": "Java Developer certification level one"
     },
     {
-      "CertifTitle": "Oracle database master",
-      "CertifLanguage": "Anglais"
+      "CertifTitle": "Oracle database master"
     }
   ],
   "Technologies": [
@@ -90,17 +86,14 @@
       "WorkExpCompany": "France Telecom",
       "WorkExpCity": "Paris",
       "WorkExpPosition": "Développeur Java",
-      "WorkExpTitle": "?",
-      "WorkExpDescription": "Développement principalement en Java pour des gros projets d'entreprise",
-      "WorkExpLanguage": "Français",
+      "WorkExpTitle": "Développement principalement en Java pour des gros projets d'entreprise",
+      "WorkExpDescription": "Dans le cadre de blabla ... j'ai été amené à blabla ... et aussi bla.",
       "WorkExpTasks":[
         {
-          "TaskName": "Codage de modules réutilisables et scalables pour prototyper de gros logiciels rapidement",
-          "TaskLanguage": "Français"
+          "TaskName": "Codage de modules réutilisables et scalables pour prototyper de gros logiciels rapidement"
         },
         {
-          "TaskName": "Supervisation d'une équipe et réalisation du projet dans les délais impartis",
-          "TaskLanguage": "Français"
+          "TaskName": "Supervisation d'une équipe et réalisation du projet dans les délais impartis"
         }
       ],
       "WorkExpTechnologies": [
@@ -124,9 +117,8 @@
       "WorkExpCompany": "Esso",
       "WorkExpCity": "Londres",
       "WorkExpPosition": "Senior développeur Java Spring",
-      "WorkExpTitle": "?",
-      "WorkExpDescription": "Maintenance et mise à jour du code java, intégration de Spring au code existant",
-      "WorkExpLanguage": "?",
+      "WorkExpTitle": "Ma responsabilité a été d'intégrer Spring au code",
+      "WorkExpDescription": "Maintenance et mise à jour du code java, intégration de Spring au code existant"
       "WorkExpTasks":[
         {
           "TaskName": "Conversion des connexions et requêtes database vers Spring",

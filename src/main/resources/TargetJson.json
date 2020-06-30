@@ -38,22 +38,18 @@
   ],
   "Education": [
     {
-      "EducationTitle": "",
-      "EducationLanguage": ""
+      "EducationTitle": ""
     },
     {
-      "EducationTitle": "",
-      "EducationLanguage": ""
+      "EducationTitle": ""
     }
   ],
   "Certifications": [
     {
-      "CertifTitle": "",
-      "CertifLanguage": ""
+      "CertifTitle": ""
     },
     {
-      "CertifTitle": "",
-      "CertifLanguage": ""
+      "CertifTitle": ""
     }
   ],
   "Technologies": [
@@ -91,15 +87,12 @@
       "WorkExpPosition": "",
       "WorkExpTitle": "",
       "WorkExpDescription": "",
-      "WorkExpLanguage": "",
       "WorkExpTasks":[
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": ""
         },
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": ""
         }
       ],
       "WorkExpTechnologies": [
@@ -137,15 +130,12 @@
       "WorkExpPosition": "",
       "WorkExpTitle": "",
       "WorkExpDescription": "",
-      "WorkExpLanguage": "",
       "WorkExpTasks":[
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": ""
         },
         {
-          "TaskName": "",
-          "TaskLanguage": ""
+          "TaskName": ""
         }
       ],
       "WorkExpTechnologies": [
