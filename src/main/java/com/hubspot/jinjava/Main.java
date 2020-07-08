@@ -1,5 +1,7 @@
 package com.hubspot.jinjava;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.hubspot.jinjava.util.ForLoop;
 import com.hubspot.jinjava.util.ObjectIterator;
@@ -181,59 +183,39 @@ public class Main {
         // Remplacer les champs par les valeurs souhaitées
         System.out.println("Jinja processing...");
 
-        List<Object> experiencesPro = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> context = mapper.readValue(new File(
+                    "src/main/resources/profile_data.json"), new TypeReference<Map<String, Object>>() {
+        });
 
-        // Taches
-        List<Map<String, Object>> listeTachesExp1 = new ArrayList<>();
-        List<Map<String, Object>> listeTachesExp2 = new ArrayList<>();
-        HashMap<String,Object> exp1_tache1 = new HashMap<>();
-        exp1_tache1.put("nom", "Expérience 1 tâche 1");
-        exp1_tache1.put("technos", "Spring");
-        listeTachesExp1.add(exp1_tache1);
-        HashMap<String,Object> exp1_tache2 = new HashMap<>();
-        exp1_tache2.put("nom", "Expérience 1 tâche 2");
-        exp1_tache2.put("technos", "UML");
-        listeTachesExp1.add(exp1_tache2);
-        HashMap<String,Object> exp2_tache1 = new HashMap<>();
-        exp2_tache1.put("nom", "Expérience 2 tâche 1");
-        exp2_tache1.put("technos", "Hibernate");
-        listeTachesExp2.add(exp2_tache1);
-        HashMap<String,Object> exp2_tache2 = new HashMap<>();
-        exp2_tache2.put("nom", "Expérience 2 tâche 2");
-        exp2_tache2.put("technos", "Spring");
-        listeTachesExp2.add(exp2_tache2);
-        HashMap<String,Object> exp2_tache3 = new HashMap<>();
-        exp2_tache3.put("nom", "Expérience 2 tâche 3");
-        exp2_tache3.put("technos", "Angular");
-        listeTachesExp2.add(exp2_tache3);
+        //Formatting tools
+        context.put("LineBreak", "<w:br w:type=\"textWrapping\"/>");
+        context.put("PageBreak", "<w:br w:type=\"page\"/>");
 
-        Map<String, Object> experience1 = new HashMap<>();
-        experience1.put("nom", "Développeur back-end JAVA");
-        experience1.put("entreprise", "Crédit Agricole");
-        experience1.put("date", "06/2019 à 06/2020");
-        experience1.put("taches", ObjectIterator.getLoop(listeTachesExp1));
-        experiencesPro.add(experience1);
-
-        HashMap<String, Object> experience2 = new HashMap<>();
-        experience2.put("nom", "Consultant JAVA");
-        experience2.put("entreprise", "BNP Paribas");
-        experience2.put("date", "03/2018 à 05/2019");
-        experience2.put("taches", ObjectIterator.getLoop(listeTachesExp2));
-        experiencesPro.add(experience2);
-
-        ForLoop experiencesProIterator = ObjectIterator.getLoop(experiencesPro);
+        //Data mapping
+        context.put("IdProfile", context.get("IdProfile"));
+        context.put("FirstName", context.get("FirstName"));
+        context.put("LastName", context.get("LastName"));
+        context.put("DateOfBirth", context.get("DateOfBirth"));
+        context.put("Nationality", context.get("Nationality"));
+        context.put("Address", context.get("Address"));
+        context.put("ZipCode", context.get("ZipCode"));
+        context.put("LivingCity", context.get("LivingCity"));
+        context.put("LivingCountry", context.get("LivingCountry"));
+        context.put("Email", context.get("Email"));
+        context.put("PhoneNumber", context.get("PhoneNumber"));
+        context.put("PhotoFileName", context.get("PhotoFileName"));
+        context.put("Hobbies", context.get("Hobbies"));
+        context.put("Languages", context.get("Languages"));
+        context.put("Education", context.get("Education"));
+        context.put("Certifications", context.get("Certifications"));
+        context.put("Technologies", context.get("Technologies"));
+        context.put("WorkExperiences", context.get("WorkExperiences"));
 
         Jinjava jinjava = new Jinjava();
-        Map<String, Object> context = Maps.newHashMap();
-        //Outils de mise en forme
-        context.put("lineBreak", "<w:br w:type=\"textWrapping\"/>");
-        context.put("pageBreak", "<w:br w:type=\"page\"/>");
-        //Données
-        context.put("nomEmploye", "Vincent MARTIN");
-        context.put("dateNaissance", "03/03/1995");
-        context.put("experiencesPro", experiencesProIterator);
-
         String renderedTemplate = jinjava.render(cleanXml, context);
+
+        System.out.println(renderedTemplate);
 
         // Ecrire le nouveau contenu dans document.xml
         File output = new File(XML_PATH);

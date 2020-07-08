@@ -2,10 +2,10 @@
   "IdProfile": "23",
   "FirstName": "Jean",
   "LastName": "Dupont",
-  "DateOfBirth": "15//12/1979",
+  "DateOfBirth": "15/12/1979",
   "Nationality": "Français",
   "Address": "21 rue Foch",
-  "Zipcode": "54430",
+  "ZipCode": "54430",
   "LivingCity": "Longwy",
   "LivingCountry": "France",
   "Email": "jean.dupont@gmail.com",
@@ -47,10 +47,12 @@
   ],
   "Certifications": [
     {
-      "CertifTitle": "Java Developer certification level one"
+      "CertifTitle": "Java Developer certification level one",
+      "DateObtained": "2002"
     },
     {
-      "CertifTitle": "Oracle database master"
+      "CertifTitle": "Oracle database master",
+      "DateObtained": "1998"
     }
   ],
   "Technologies": [
@@ -118,7 +120,7 @@
       "WorkExpCity": "Londres",
       "WorkExpPosition": "Senior développeur Java Spring",
       "WorkExpTitle": "Ma responsabilité a été d'intégrer Spring au code",
-      "WorkExpDescription": "Maintenance et mise à jour du code java, intégration de Spring au code existant"
+      "WorkExpDescription": "Maintenance et mise à jour du code java, intégration de Spring au code existant",
       "WorkExpTasks":[
         {
           "TaskName": "Conversion des connexions et requêtes database vers Spring",

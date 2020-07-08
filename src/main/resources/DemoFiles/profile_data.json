@@ -1,0 +1,162 @@
+{
+  "IdProfile": "23",
+  "FirstName": "Jean",
+  "LastName": "Dupont",
+  "DateOfBirth": "15/12/1979",
+  "Nationality": "Français",
+  "Address": "21 rue Foch",
+  "ZipCode": "54430",
+  "LivingCity": "Longwy",
+  "LivingCountry": "France",
+  "Email": "jean.dupont@gmail.com",
+  "PhoneNumber": "0622334455",
+  "PhotoFileName": "jean_dupont.jpg",
+  "Hobbies":[
+    {
+      "HobbyName": "Escalade"
+    },
+    {
+      "HobbyName": "Astronomie"
+    }
+  ],
+  "Languages":[
+    {
+    "LanguageName": "Français",
+    "FluencyWrittenComprehension": "Courant",
+    "FluencyWrittenExpression": "Courant",
+    "FluencyOralComprehension": "Courant",
+    "FluencyOralExpression": "Courant",
+    "FluencyTechnicalVocab": "Courant"
+    },
+    {
+    "LanguageName": "Anglais",
+    "FluencyWrittenComprehension": "Avancé",
+    "FluencyWrittenExpression": "Basique",
+    "FluencyOralComprehension": "Niveau professionnel",
+    "FluencyOralExpression": "Niveau moyen",
+    "FluencyTechnicalVocab": "Niveau professionnel"
+    }
+  ],
+  "Education": [
+    {
+    "EducationTitle": "Master en ingénieurie informatique"
+    },
+    {
+    "EducationTitle": "Licence d'ingénieur"
+    }
+  ],
+  "Certifications": [
+    {
+      "CertifTitle": "Java Developer certification level one",
+      "DateObtained": "2002"
+    },
+    {
+      "CertifTitle": "Oracle database master",
+      "DateObtained": "1998"
+    }
+  ],
+  "Technologies": [
+    {
+      "TechName": "Java",
+      "TechLevel": "Senior",
+      "TechPrinciples": [
+        {
+          "PrincipleName": "OOP"
+        },
+        {
+          "PrincipleName": "Desktop application"
+        }
+      ]
+    },
+    {
+      "TechName": "Spring",
+      "TechLevel": "Senior",
+      "TechPrinciples": [
+        {
+          "PrincipleName": "Dependency Injection"
+        },
+        {
+          "PrincipleName": "Object Relational Mapping"
+        }
+      ]
+    }
+  ],
+  "WorkExperiences":[
+    {
+      "WorkExpStart": "2002",
+      "WorkExpEnd": "2010",
+      "WorkExpCompany": "France Telecom",
+      "WorkExpCity": "Paris",
+      "WorkExpPosition": "Développeur Java",
+      "WorkExpTitle": "Développement principalement en Java pour des gros projets d'entreprise",
+      "WorkExpDescription": "Dans le cadre de blabla ... j'ai été amené à blabla ... et aussi bla.",
+      "WorkExpTasks":[
+        {
+          "TaskName": "Codage de modules réutilisables et scalables pour prototyper de gros logiciels rapidement"
+        },
+        {
+          "TaskName": "Supervisation d'une équipe et réalisation du projet dans les délais impartis"
+        }
+      ],
+      "WorkExpTechnologies": [
+      {
+        "TechName": "Java",
+        "TechLevel": "Senior",
+        "TechPrinciples": [
+          {
+            "PrincipleName": "OOP"
+          },
+          {
+            "PrincipleName": "Desktop application"
+          }
+        ]
+      }
+    ]
+    },
+    {
+      "WorkExpStart": "2010",
+      "WorkExpEnd": "2019",
+      "WorkExpCompany": "Esso",
+      "WorkExpCity": "Londres",
+      "WorkExpPosition": "Senior développeur Java Spring",
+      "WorkExpTitle": "Ma responsabilité a été d'intégrer Spring au code",
+      "WorkExpDescription": "Maintenance et mise à jour du code java, intégration de Spring au code existant",
+      "WorkExpTasks":[
+        {
+          "TaskName": "Conversion des connexions et requêtes database vers Spring",
+          "TaskLanguage": "Français"
+        },
+        {
+          "TaskName": "Mise à jour du code Java vers la version 11",
+          "TaskLanguage": "Français"
+        }
+      ],
+      "WorkExpTechnologies": [
+        {
+          "TechName": "Spring",
+          "TechLevel": "Senior",
+          "TechPrinciples": [
+            {
+              "PrincipleName": "Dependency Injection"
+            },
+            {
+              "PrincipleName": "Object Relational Mapping"
+            }
+          ]
+        },
+        {
+          "TechName": "Java",
+          "TechLevel": "Senior",
+          "TechPrinciples": [
+            {
+              "PrincipleName": "OOP"
+            },
+            {
+              "PrincipleName": "Desktop application"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
