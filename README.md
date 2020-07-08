@@ -1,5 +1,5 @@
 # Talan - How to use
-Refer to the provided _Developer Manual_ and install the prequisite packages before testing.
+Refer to the provided _Developer Manual_ and install the prequisite packages before testing.\
 Refer to the provided _User Manual_ to know how to write templates.
 
 To test a template:
